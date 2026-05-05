@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>İlanlar - Başiskele Belediyesi Kariyer Platformu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <style>
+        :root {
+    --primary-color: #005792;
+    --scrolled-nav-link: #5098f6;
+    --light-blue: #e0f0ff;
+    --shadow-light: rgba(0,0,0,0.1);
+  }
+
+        body {
+            padding-top: 60px;
+            background-color: var(--light-blue);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+
+        .bg-icons-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; overflow: hidden; z-index: -1;
+        }
+        .bg-icons-container i {
+            position: absolute; font-size: 2rem; color: rgba(0, 0, 128, 0.5);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(100vh) scale(0.8); opacity: 0.4; }
+            to   { transform: translateY(-20vh) scale(1.2); opacity: 1; }
+        }
+        .bg-icons-container i:nth-child(1)  { left: 5%;  animation-duration: 25s; font-size: 2.2rem; }
+        .bg-icons-container i:nth-child(2)  { left: 15%; animation-duration: 20s; font-size: 1.8rem; }
+        .bg-icons-container i:nth-child(3)  { left: 25%; animation-duration: 30s; font-size: 2.5rem; }
+        .bg-icons-container i:nth-child(4)  { left: 35%; animation-duration: 22s; font-size: 1.9rem; }
+        .bg-icons-container i:nth-child(5)  { left: 45%; animation-duration: 28s; font-size: 2.1rem; }
+        .bg-icons-container i:nth-child(6)  { left: 55%; animation-duration: 26s; font-size: 2.3rem; }
+        .bg-icons-container i:nth-child(7)  { left: 65%; animation-duration: 19s; font-size: 1.7rem; }
+        .bg-icons-container i:nth-child(8)  { left: 75%; animation-duration: 32s; font-size: 2.4rem; }
+        .bg-icons-container i:nth-child(9)  { left: 85%; animation-duration: 21s; font-size: 2.0rem; }
+        .bg-icons-container i:nth-child(10) { left: 95%; animation-duration: 29s; font-size: 2.6rem; }
+        .bg-icons-container i:nth-child(11) { left: 10%; animation-duration: 23s; font-size: 1.6rem; }
+        .bg-icons-container i:nth-child(12) { left: 30%; animation-duration: 27s; font-size: 2.0rem; }
+        .bg-icons-container i:nth-child(13) { left: 50%; animation-duration: 20s; font-size: 1.9rem; }
+        .bg-icons-container i:nth-child(14) { left: 70%; animation-duration: 31s; font-size: 2.2rem; }
+        .bg-icons-container i:nth-child(15) { left: 90%; animation-duration: 24s; font-size: 1.8rem; }
+        .bg-icons-container i:nth-child(16) { left: 20%; animation-duration: 26s; font-size: 2.1rem; }
+        .bg-icons-container i:nth-child(17) { left: 40%; animation-duration: 18s; font-size: 1.7rem; }
+        .bg-icons-container i:nth-child(18) { left: 60%; animation-duration: 33s; font-size: 2.4rem; }
+        .bg-icons-container i:nth-child(19) { left: 80%; animation-duration: 22s; font-size: 2.0rem; }
+        .bg-icons-container i:nth-child(20) { left: 0%;  animation-duration: 27s; font-size: 2.3rem; }
+
+        .navbar-custom {
+    position: fixed; top: 0; width: 100%;
+    background: transparent;
+    transition: background-color .3s, backdrop-filter .3s, box-shadow .3s;
+    z-index: 1000;
+  }
+  .navbar-custom.scrolled {
+    background: var(--light-blue);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px var(--shadow-light);
+  }
+  .navbar-custom .nav-link {
+    position: relative; color: var(--primary-color);
+    transition: color .3s, transform .3s;
+  }
+  .navbar-custom .nav-link::after {
+    content: ''; position: absolute; bottom: 0; left: 50%;
+    width: 0; height: 2px; background: var(--primary-color);
+    transition: width .3s, left .3s;
+  }
+  .navbar-custom .nav-link:hover {
+    color: var(--primary-color); transform: translateY(-3px);
+  }
+  .navbar-custom .nav-link:hover::after {
+    width: 100%; left: 0;
+  }
+  navbar-custom.scrolled .nav-link {
+    color: var(--scrolled-nav-link) !important;
+  }.navbar-custom.scrolled .nav-link:hover,
+  .navbar-custom.scrolled .nav-link.active {
+    color: #fff !important;
+  }
+  .navbar-custom.scrolled .nav-link::after {
+    background: #fff !important;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .navbar-custom .nav-item {
+    opacity: 0;
+    animation: fadeInDown .5s ease forwards;
+  }
+  .navbar-custom .nav-item:nth-child(1) { animation-delay: .1s; }
+  .navbar-custom .nav-item:nth-child(2) { animation-delay: .2s; }
+  .navbar-custom .nav-item:nth-child(3) { animation-delay: .3s; }
+  .navbar-custom .nav-item:nth-child(4) { animation-delay: .4s; }
+
+
+        .navbar-custom.scrolled .nav-link { color: var(--scrolled-nav-link) !important; }
+        .navbar-custom.scrolled .nav-link:hover,
+        .navbar-custom.scrolled .nav-link.active { color: #e4dcdc !important; }
+        .navbar-custom.scrolled .nav-link::after { background-color: #fff !important; }
+        .navbar-custom.scrolled .navbar-nav .nav-link.active { color: var(--scrolled-nav-link) !important; }
+
+        .page-header {
+            background: #fff; border-radius: 10px; padding: 15px 20px;
+            margin-bottom: 20px; box-shadow: 0 2px 8px var(--shadow-light);
+            text-align: center;
+        }
+
+        .job-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px var(--shadow-light);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px var(--shadow-heavy);
+  border-color: var(--primary-color);
+}
+
+.job-card .card-header {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-card .card-body {
+  padding: 15px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+/* --------- BURASI DEĞİŞTİ: FOOTER --------- */
+.job-card .card-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 15px;
+  flex-wrap: wrap;            /* gerektiğinde alt satıra sarkabilsin */
+}
+
+/* Tarih sola sabit, ama çok yer kaplamasın */
+.job-card .card-footer .job-date {
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+/* Tüm butonlara ortak küçük stil */
+.job-card .card-footer .btn {
+  flex: 0 1 auto;             /* içeriğe göre küçülsün, taşmasın */
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  min-width: 0;                /* çok geniş tutmayı kes */
+  height: auto;
+  white-space: nowrap;
+}
+
+/* Mesaj butonunun orijinal rengini koru */
+.job-card .card-footer .btn-message {
+  border: 1px solid var(--primary-color);
+  background: transparent;
+  color: var(--primary-color);
+}
+.job-card .card-footer .btn-message:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* Mobilde alt alta, %50 genişlik */
+@media (max-width: 576px) {
+  .job-card .card-footer {
+    justify-content: center;
+  }
+  .job-card .card-footer .job-date {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 8px;
+  }
+  .job-card .card-footer .btn {
+    flex: 1 1 45%;
+  }
+}
+
+
+
+
+        .btn-contact {
+            background-color: var(--primary-color); color: white;
+            padding: 8px 20px; border-radius: 25px; font-weight: 600;
+            width: 100%; transition: all 0.3s ease; display: flex;
+            justify-content: center; align-items: center; gap: 8px;
+            box-shadow: 0 3px 10px rgba(0,87,146,0.3);
+        }
+        .btn-contact:hover {
+            background-color: var(--primary-dark); color: white;
+            transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,87,146,0.5);
+        }
+        .job-type { padding: 5px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .job-type.employer { background-color: #4CAF50; color: white; }
+        .job-type.job-seeker { background-color: #2196F3; color: white; }
+        .daily-wage { background-color: #FF9800; color: white; padding: 5px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+        .poster-name { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; display: flex; align-items: center; }
+        .poster-name i { margin-right: 5px; color: var(--primary-color); font-size: 0.9rem; }
+
+        #new-listing-form {
+            background: #fff; border-radius: 10px; padding: 20px;
+            box-shadow: 0 5px 15px var(--shadow-light);
+            margin-top: 30px; margin-bottom: 30px;
+        }
+
+        footer {
+            background-color: var(--primary-dark); color: #ffffff;
+            padding: 40px 0 20px; font-size: 0.9rem;
+        }
+        .footer-section { margin-bottom: 20px; }
+        .footer-section h5 {
+            color: #fff; font-weight: 700; margin-bottom: 15px;
+            padding-bottom: 10px; border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .footer-section ul { padding-left: 0; list-style: none; }
+        .footer-section ul li { margin-bottom: 8px; }
+        .footer-section a { color: rgba(255, 255, 255, 0.85); transition: color 0.2s ease; text-decoration: none; }
+        .footer-section a:hover { color: #a0cfff; text-decoration: underline; }
+        .footer-bottom { padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.15); }
+        .footer-logo { width: 140px; margin-bottom: 15px; }
+        .social-media-links { margin-top: 15px; display: flex; justify-content: center; gap: 15px; }
+        .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255, 255, 255, 0.1); color: white; font-size: 18px; transition: all 0.3s ease; text-decoration: none; }
+        .social-icon:hover { transform: translateY(-5px) rotate(10deg) scale(1.1); background: white; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); }
+        .social-icon.facebook:hover { color: #1877f2; }
+        .social-icon.twitter:hover { color: #1da1f2; }
+        .social-icon.instagram:hover { color: #c13584; }
+        .social-icon.youtube:hover { color: #ff0000; }
+
+        .notification-dropdown { position: relative; margin-left: 1rem; }        .notification-button { background: none; border: none; color: var(--primary-color); font-size: 1.5rem; cursor: pointer; position: relative; padding: 5px 10px; border-radius: 50%; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .notification-button {
+    background: none; border: none; color: var(--primary-color);
+    font-size: 1.5rem; position: relative; cursor: pointer;
+  }     
+  
+  .notification-button .badge {
+    position: absolute; top: 0; right: 0;
+    transform: translate(50%,-50%);
+    background: #dc3545; color: #fff;
+    padding: .2rem .4rem; border-radius: 50%; font-size: .7rem;
+  }
+  
+  .notification-content {
+    display: none; position: absolute; top: 100%; right: 0;
+    width: 300px; background: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,.2);
+    border-radius: 8px; overflow: hidden; margin-top: .5rem;
+    z-index: 1001;
+  }
+  
+  .notification-content.show { display: block; }
+        .notification-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background-color: var(--primary-dark); color: white; border-bottom: 1px solid rgba(255,255,255,0.2); font-weight: 600; font-size: 1.1em; }
+        .notification-header button { background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8em; transition: all 0.2s ease; }
+        .notification-header button:hover { background-color: rgba(255,255,255,0.2); border-color: white; }
+        .notification-list { list-style: none; padding: 0; margin: 0; max-height: 250px; overflow-y: auto; background-color: #fdfdfd; }
+        .notification-item { padding: 12px 15px; border-bottom: 1px solid #eee; transition: background-color 0.2s ease; display: flex; align-items: flex-start; gap: 10px; }
+        .notification-item.unread { background-color: var(--light-blue); font-weight: 500; }
+        .notification-item:hover { background-color: #e9f5ff; }
+        .notification-item .icon { font-size: 1.2em; color: var(--primary-color); flex-shrink: 0; padding-top: 2px; }
+        .notification-item .details { flex-grow: 1; }
+        .notification-item .title { font-weight: 600; color: var(--primary-dark); margin-bottom: 3px; }
+        .notification-item .message-text { font-size: 0.9em; color: var(--text-secondary); }
+        .notification-item .time-ago { font-size: 0.8em; color: var(--text-muted); margin-top: 5px; text-align: right; }
+        .no-notifications { padding: 20px 15px; text-align: center; color: var(--text-muted); font-style: italic; }
+        .notification-footer { padding: 10px 15px; text-align: center; border-top: 1px solid #eee; background-color: #f0f7ff; }
+        .notification-footer a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .navbar-custom.scrolled .notification-button { color: var(--scrolled-nav-link) !important; }
+        .navbar-custom.scrolled .notification-button:hover { color: #e4dcdc !important; background-color: rgba(255, 255, 255, 0.2) !important; }
+
+        #jobDetailModal .modal-body { padding: 20px; font-size: 1rem; line-height: 1.6; }
+        #jobDetailModal .modal-body strong { color: var(--primary-dark); }
+        #jobDetailModal .modal-body p { margin-bottom: 10px; }
+        #jobDetailModal .modal-body .badge { font-size: 0.9em; vertical-align: middle; margin-left: 5px; }
+    
+
+        /* ===== Profesyonel Ortak Arayüz Düzeltmeleri ===== */
+        :root {
+            --primary-color: #005792;
+            --primary-dark: #003d66;
+            --brand-accent: #18a058;
+            --surface: rgba(255,255,255,.88);
+            --surface-solid: #ffffff;
+            --soft-line: rgba(0,87,146,.14);
+            --shadow-soft: 0 18px 45px rgba(0,61,102,.12);
+            --shadow-hover: 0 22px 55px rgba(0,87,146,.18);
+            --text-color: #102033;
+            --text-muted: #667085;
+            --light-blue: #eaf6ff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            padding-top: 92px !important;
+            background:
+                radial-gradient(circle at 12% 12%, rgba(24,160,88,.16), transparent 30%),
+                radial-gradient(circle at 88% 22%, rgba(0,87,146,.14), transparent 32%),
+                linear-gradient(135deg, #eef8ff 0%, #f7fbff 48%, #effff6 100%) !important;
+            color: var(--text-color) !important;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0,87,146,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,87,146,.035) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,.75), transparent 78%);
+            z-index: 0;
+        }
+
+        body > *:not(.bg-icons-container) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-icons-container {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 0 !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+        }
+
+        .bg-icons-container i {
+            position: absolute !important;
+            left: var(--x) !important;
+            bottom: -120px !important;
+            font-size: var(--s) !important;
+            color: rgba(0,87,146,.15) !important;
+            filter: drop-shadow(0 10px 18px rgba(0,87,146,.08));
+            animation: professionalIconFloat var(--d) ease-in-out infinite !important;
+            animation-delay: var(--delay) !important;
+            opacity: 0;
+        }
+
+        @keyframes professionalIconFloat {
+            0% { transform: translate3d(0, 110vh, 0) rotate(0deg) scale(.85); opacity: 0; }
+            12% { opacity: .20; }
+            55% { opacity: .14; }
+            100% { transform: translate3d(var(--move), -26vh, 0) rotate(32deg) scale(1.08); opacity: 0; }
+        }
+
+        .navbar-custom {
+            top: 14px !important;
+            left: 50% !important;
+            width: min(1180px, calc(100% - 32px)) !important;
+            transform: translateX(-50%) !important;
+            padding: 10px 14px !important;
+            border-radius: 24px !important;
+            background: rgba(255,255,255,.88) !important;
+            border: 1px solid rgba(255,255,255,.75) !important;
+            box-shadow: 0 16px 42px rgba(16,32,51,.10) !important;
+            backdrop-filter: blur(18px) saturate(145%) !important;
+            -webkit-backdrop-filter: blur(18px) saturate(145%) !important;
+            transition: all .25s ease !important;
+        }
+
+        .navbar-custom.scrolled {
+            top: 10px !important;
+            background: rgba(255,255,255,.95) !important;
+            box-shadow: 0 16px 46px rgba(0,61,102,.16) !important;
+        }
+
+        .navbar-custom .container { gap: 16px; }
+
+        .navbar-brand {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            margin-right: 18px !important;
+            text-decoration: none !important;
+        }
+
+        .brand-logo-wrap {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            box-shadow: inset 0 0 0 1px rgba(0,87,146,.08), 0 10px 24px rgba(0,87,146,.10);
+            overflow: hidden;
+        }
+
+        .brand-logo-wrap img {
+            max-height: 52px;
+            max-width: 52px;
+            object-fit: contain;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.05;
+            color: var(--primary-dark);
+            white-space: nowrap;
+        }
+
+        .brand-text strong {
+            font-size: 1.02rem;
+            letter-spacing: -.3px;
+            font-weight: 800;
+        }
+
+        .brand-text small {
+            margin-top: 4px;
+            color: var(--text-muted);
+            font-size: .74rem;
+            font-weight: 600;
+        }
+
+        .navbar-nav {
+            gap: 7px !important;
+            align-items: center !important;
+        }
+
+        .navbar-custom .nav-item {
+            opacity: 1 !important;
+            animation: none !important;
+        }
+
+        .navbar-custom .nav-link {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            min-height: 42px !important;
+            padding: 10px 14px !important;
+            border-radius: 999px !important;
+            color: #154360 !important;
+            font-size: .95rem !important;
+            font-weight: 700 !important;
+            letter-spacing: -.15px !important;
+            line-height: 1 !important;
+            transition: background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease !important;
+        }
+
+        .navbar-custom .nav-link::after { display: none !important; }
+
+        .navbar-custom .nav-link:hover {
+            color: var(--primary-color) !important;
+            background: rgba(0,87,146,.08) !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .navbar-custom .nav-link.active,
+        .navbar-custom .profile-link[aria-expanded="true"] {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+            color: #fff !important;
+            box-shadow: 0 10px 24px rgba(0,87,146,.22) !important;
+        }
+
+        .navbar-custom.scrolled .nav-link,
+        .navbar-custom.scrolled .nav-link.active,
+        .navbar-custom.scrolled .notification-button {
+            color: inherit !important;
+        }
+
+        .navbar-custom.scrolled .nav-link.active { color: #fff !important; }
+
+        .btn-auth-cta {
+            min-height: 42px;
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px !important;
+            border-radius: 999px !important;
+            color: #fff !important;
+            font-weight: 800 !important;
+            background: linear-gradient(135deg, #18a058, #0f7a38) !important;
+            border: 0 !important;
+            box-shadow: 0 10px 24px rgba(24,160,88,.18) !important;
+        }
+
+        .notification-dropdown { margin-left: 4px !important; position: relative !important; display: flex !important; align-items: center !important; }
+
+        .notification-button {
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 16px !important;
+            border: 1px solid rgba(0,87,146,.10) !important;
+            background: #eef7ff !important;
+            color: var(--primary-color) !important;
+            display: grid !important;
+            place-items: center !important;
+            padding: 0 !important;
+            transition: .22s ease !important;
+        }
+
+        .notification-button:hover {
+            transform: translateY(-1px) !important;
+            background: rgba(0,87,146,.10) !important;
+            color: var(--primary-dark) !important;
+        }
+
+        .notification-button .badge {
+            top: -4px !important;
+            right: -4px !important;
+            min-width: 20px !important;
+            height: 20px !important;
+            padding: 0 6px !important;
+            border: 2px solid #fff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .notification-content,
+        .dropdown-menu {
+            border: 1px solid rgba(0,87,146,.12) !important;
+            border-radius: 18px !important;
+            box-shadow: 0 18px 45px rgba(16,32,51,.16) !important;
+            overflow: hidden;
+        }
+
+        .dropdown-item {
+            font-weight: 600;
+            color: #344054;
+            padding: 10px 14px;
+        }
+
+        .dropdown-item:hover {
+            background: #eef7ff;
+            color: var(--primary-color);
+        }
+
+        .page-header,
+        .chat-app,
+        #new-listing-form,
+        .job-card {
+            border: 1px solid rgba(255,255,255,.72) !important;
+            box-shadow: var(--shadow-soft) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        .page-header {
+            background:
+                linear-gradient(135deg, rgba(0,87,146,.96), rgba(0,61,102,.94)) !important;
+            color: #fff !important;
+            border-radius: 28px !important;
+            padding: 42px 24px !important;
+            margin-bottom: 24px !important;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            right: -110px;
+            top: -130px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.13);
+        }
+
+        .page-header h2 {
+            font-weight: 800;
+            letter-spacing: -.7px;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header p { color: rgba(255,255,255,.84); position: relative; z-index: 1; }
+
+        .container.py-5 > .row.mb-4:first-of-type {
+            background: rgba(255,255,255,.80);
+            border: 1px solid rgba(255,255,255,.74);
+            border-radius: 24px;
+            padding: 18px 18px 8px;
+            box-shadow: 0 12px 32px rgba(0,61,102,.08);
+            backdrop-filter: blur(12px);
+        }
+
+        .form-select,
+        .form-control {
+            border-radius: 14px !important;
+            border-color: rgba(0,87,146,.16) !important;
+            min-height: 46px;
+        }
+
+        .form-select:focus,
+        .form-control:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 4px rgba(0,87,146,.11) !important;
+        }
+
+        .btn {
+            border-radius: 14px !important;
+            font-weight: 700 !important;
+        }
+
+        .btn-primary,
+        .btn-contact {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark)) !important;
+            border-color: transparent !important;
+        }
+
+        .btn-secondary {
+            background: #eef2f6 !important;
+            border-color: #e4e7ec !important;
+            color: #344054 !important;
+        }
+
+        .job-card {
+            background: rgba(255,255,255,.92) !important;
+            border-radius: 24px !important;
+            overflow: hidden;
+            transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease !important;
+        }
+
+        .job-card:hover {
+            transform: translateY(-6px) !important;
+            box-shadow: var(--shadow-hover) !important;
+            border-color: rgba(0,87,146,.22) !important;
+        }
+
+        .job-card .card-header {
+            background: linear-gradient(135deg, #f8fbff, #eff8ff) !important;
+            padding: 17px 18px !important;
+        }
+
+        .job-card .card-body { padding: 20px !important; }
+
+        .job-title { font-weight: 800; color: var(--primary-dark); letter-spacing: -.25px; }
+        .job-description { color: #475467; }
+        .job-location i,
+        .job-work-type i { color: var(--primary-color); }
+
+        .job-type {
+            border-radius: 999px !important;
+            padding: 7px 11px !important;
+            letter-spacing: .2px;
+        }
+
+        .job-card .card-footer {
+            background: #fbfdff !important;
+            border-top: 1px solid rgba(0,87,146,.08) !important;
+            padding: 14px 16px !important;
+        }
+
+        footer {
+            border-radius: 32px 32px 0 0;
+            background: linear-gradient(135deg, #003d66, #002d4d) !important;
+            box-shadow: 0 -18px 45px rgba(0,61,102,.12);
+        }
+
+        @media (max-width: 991px) {
+            body { padding-top: 88px !important; }
+            .navbar-custom { width: calc(100% - 20px) !important; top: 10px !important; border-radius: 20px !important; }
+            .brand-text { display: none; }
+            .navbar-collapse {
+                margin-top: 10px;
+                padding: 12px;
+                background: rgba(255,255,255,.95);
+                border-radius: 18px;
+                border: 1px solid rgba(0,87,146,.08);
+            }
+            .navbar-custom .nav-link,
+            .btn-auth-cta { width: 100%; justify-content: flex-start !important; }
+            .notification-dropdown { width: 100%; margin-left: 0 !important; }
+            .notification-button { width: 100% !important; justify-content: flex-start !important; padding-left: 14px !important; display: flex !important; }
+            .notification-content { position: static !important; width: 100% !important; max-width: none !important; margin-top: 10px !important; }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="bg-icons-container" aria-hidden="true">
+        <i class="fas fa-building" style="--x:6%;--s:2.4rem;--d:24s;--delay:-2s;--move:22px;"></i>
+        <i class="fas fa-users" style="--x:16%;--s:2rem;--d:29s;--delay:-9s;--move:-18px;"></i>
+        <i class="fas fa-briefcase" style="--x:27%;--s:2.6rem;--d:26s;--delay:-14s;--move:26px;"></i>
+        <i class="fas fa-comments" style="--x:39%;--s:2.1rem;--d:31s;--delay:-5s;--move:-24px;"></i>
+        <i class="fas fa-handshake" style="--x:50%;--s:2.8rem;--d:27s;--delay:-18s;--move:18px;"></i>
+        <i class="fas fa-file-alt" style="--x:62%;--s:2.1rem;--d:34s;--delay:-11s;--move:-26px;"></i>
+        <i class="fas fa-chart-line" style="--x:74%;--s:2.5rem;--d:25s;--delay:-7s;--move:28px;"></i>
+        <i class="fas fa-user-tie" style="--x:86%;--s:2.2rem;--d:30s;--delay:-16s;--move:-20px;"></i>
+        <i class="fas fa-map-marker-alt" style="--x:94%;--s:2rem;--d:28s;--delay:-3s;--move:16px;"></i>
+        <i class="fas fa-search" style="--x:10%;--s:1.8rem;--d:33s;--delay:-20s;--move:-15px;"></i>
+        <i class="fas fa-bullhorn" style="--x:57%;--s:1.9rem;--d:36s;--delay:-23s;--move:24px;"></i>
+        <i class="fas fa-city" style="--x:80%;--s:2.7rem;--d:38s;--delay:-26s;--move:-28px;"></i>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="anasayfa.html" aria-label="Başiskele Kariyer ana sayfa">
+                <span class="brand-logo-wrap">
+                    <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo" height="54">
+                </span>
+                <span class="brand-text">
+                    <strong>Başiskele</strong>
+                    <small>Kariyer Platformu</small>
+                </span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Menüyü Aç/Kapat">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-lg-center">
+                    <li class="nav-item"><a class="nav-link" href="anasayfa.html"><i class="fas fa-home"></i> Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="ilanlar.html"><i class="fas fa-briefcase"></i> İlanlar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mesajlar.html"><i class="fas fa-comments"></i> Mesajlar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="iletisim.html"><i class="fas fa-map-marker-alt"></i> İletişim</a></li>
+
+                    <li class="nav-item" id="nav-guest-section">
+                        <a href="login.html" class="btn btn-auth-cta ms-lg-2"><i class="fas fa-sign-in-alt me-1"></i> Giriş / Üyelik</a>
+                    </li>
+
+                    <li class="nav-item dropdown" id="nav-user-section" style="display:none;">
+                        <a class="nav-link dropdown-toggle profile-link" href="#" id="navbarProfileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="nav-profile-name">Profilim</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarProfileDropdown">
+                            <li><a class="dropdown-item" href="user_dashboard.html"><i class="fas fa-id-card me-2"></i>Panelim</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button class="dropdown-item" id="nav-logout-btn" type="button"><i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap</button></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item notification-dropdown">
+                        <button class="notification-button" id="notificationButton" aria-expanded="false" aria-haspopup="true" type="button" title="Bildirimler">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notificationCountBadge" style="display:none;">0</span>
+                        </button>
+                        <div class="notification-content" id="notificationDropdown">
+                            <div class="notification-header">
+                                <span>Bildirimler</span>
+                                <button id="markAllAsRead" type="button">Tümünü Oku</button>
+                            </div>
+                            <ul class="notification-list" id="notificationList">
+                                <li class="no-notifications">Yeni bildiriminiz yok.</li>
+                            </ul>
+                            <div class="notification-footer">
+                                <a href="#">Tüm Bildirimleri Gör</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="page-header">
+            <h2>Güncel İş İlanları</h2>
+            <p class="mb-0">İşveren ve iş arayan ilanlarını inceleyebilirsiniz</p>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <select id="filter-type" class="form-select shadow-sm">
+                    <option value="">Tüm Tipler</option>
+                    <option value="employer">İşveren</option>
+                    <option value="job-seeker">İş Arayan</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <select id="filter-work-type" class="form-select shadow-sm">
+                    <option value="">Çalışma Şekli</option>
+                    <option value="tam-zamanli">Tam Zamanlı</option>
+                    <option value="yari-zamanli">Yarı Zamanlı</option>
+                    <option value="uzaktan">Uzaktan</option>
+                    <option value="staj">Staj</option>
+                    <option value="donemsel">Dönemsel</option>
+                    <option value="yevmiyeli">Yevmiyeli</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <select id="filter-location" class="form-select shadow-sm">
+                    <option value="">Tüm Konumlar</option>
+                    <option value="Başiskele">Başiskele</option>
+                    <option value="İzmit">İzmit</option>
+                    <option value="Gölcük">Gölcük</option>
+                    <option value="Kartepe">Kartepe</option>
+                    <option value="Gebze">Gebze</option>
+                    <option value="Derince">Derince</option>
+                    <option value="Körfez">Körfez</option>
+                    <option value="Dilovası">Dilovası</option>
+                    <option value="Karamürsel">Karamürsel</option>
+                    <option value="Çayırova">Çayırova</option>
+                    <option value="Darıca">Darıca</option>
+                    <option value="Kocaeli Genel">Kocaeli Genel</option>
+                    <option value="Uzaktan">Uzaktan</option>
+                </select>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <input type="text" id="search-input" class="form-control shadow-sm" placeholder="İlanlarda Ara..." />
+            </div>
+            <div class="col-12 text-center">
+                <button id="reset-filters" class="btn btn-secondary mt-2 animate__animated animate__fadeInUp">
+                    <i class="fas fa-redo me-2"></i>Filtreleri Temizle
+                </button>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <button id="toggle-form-button" class="btn btn-primary animate__animated animate__fadeInUp">
+                    <i class="fas fa-plus-circle me-2"></i>Yeni İlan Ekle
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <form id="new-listing-form" class="animate__animated animate__fadeIn" style="display: none;">
+                    <input type="hidden" id="new-listing-id" value="">
+                    <h4 class="mb-4 text-center">Yeni İlan Detayları</h4>
+                    <div class="mb-3">
+                        <label for="new-listing-type" class="form-label">İlan Tipi</label>
+                        <select class="form-select" id="new-listing-type" required>
+                            <option value="">Seçiniz</option>
+                            <option value="employer">İşveren (İşçi Arıyorum)</option>
+                            <option value="job-seeker">İş Arayan (İş Arıyorum)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-listing-title" class="form-label">İlan Başlığı</label>
+                        <input type="text" class="form-control" id="new-listing-title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-listing-description" class="form-label">Açıklama</label>
+                        <textarea class="form-control" id="new-listing-description" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-listing-location" class="form-label">Konum</label>
+                        <select class="form-select" id="new-listing-location" required>
+                            <option value="">Konum Seçiniz</option>
+                            <option value="Başiskele">Başiskele</option>
+                            <option value="İzmit">İzmit</option>
+                            <option value="Gölcük">Gölcük</option>
+                            <option value="Kartepe">Kartepe</option>
+                            <option value="Gebze">Gebze</option>
+                            <option value="Derince">Derince</option>
+                            <option value="Körfez">Körfez</option>
+                            <option value="Dilovası">Dilovası</option>
+                            <option value="Karamürsel">Karamürsel</option>
+                            <option value="Çayırova">Çayırova</option>
+                            <option value="Darıca">Darıca</option>
+                            <option value="Kocaeli Genel">Kocaeli Genel</option>
+                            <option value="Uzaktan">Uzaktan</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-listing-work-type" class="form-label">Çalışma Şekli</label>
+                        <select class="form-select" id="new-listing-work-type" required>
+                            <option value="">Çalışma Şekli Seçiniz</option>
+                            <option value="tam-zamanli">Tam Zamanlı</option>
+                            <option value="yari-zamanli">Yarı Zamanlı</option>
+                            <option value="uzaktan">Uzaktan</option>
+                            <option value="staj">Staj</option>
+                            <option value="donemsel">Dönemsel</option>
+                            <option value="yevmiyeli">Yevmiyeli</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-listing-poster-name" class="form-label">Adınız/Kurum Adınız</label>
+                        <input type="text" class="form-control" id="new-listing-poster-name" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <span id="new-listing-submit-text"><i class="fas fa-save me-2"></i>İlanı Kaydet</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" id="job-listings-container"></div>
+    </div>
+
+    <div class="modal fade" id="jobDetailModal" tabindex="-1" aria-labelledby="jobDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jobDetailModalTitle">İlan Detayları</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+                </div>
+                <div class="modal-body" id="jobDetailModalBody"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Firebase compat (v8 tarzı API) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyALJWbNPziCXnjbgAwbGxpeRafO0O29fy4",
+        authDomain: "belediye-kariyer-project.firebaseapp.com",
+        projectId: "belediye-kariyer-project",
+        storageBucket: "belediye-kariyer-project.firebasestorage.app",
+        messagingSenderId: "1018107908919",
+        appId: "1:1018107908919:web:b750dff35acbed659d80b2",
+        measurementId: "G-NZN8NGWDT7"
+      };
+      const app = firebase.initializeApp(firebaseConfig);
+      window.auth = firebase.auth();
+      window.db   = firebase.firestore();
+      console.log("Firebase Global Objeleri ilanlar.html'de Tanımlandı.");
+    </script>
+
+    <script>
+        // compat kullanımı
+        const auth = window.auth;
+        const db   = window.db;
+
+        function showMessage(message, type = 'info', targetElementId = 'formMessage') {
+            const messageElement = document.getElementById(targetElementId);
+            if (messageElement) {
+                messageElement.textContent = message;
+                messageElement.className = `mt-3 text-center alert alert-${type}`;
+                messageElement.style.display = 'block';
+                setTimeout(() => { messageElement.style.display = 'none'; }, 5000);
+            }
+        }
+
+        // Basit stub - düzenleme fonksiyonu yoksa hata almasın
+        function openEditForm(id) {
+            alert('Düzenleme özelliği henüz eklenmedi. İlan ID: ' + id);
+        }
+
+        auth.onAuthStateChanged(function(user) {
+            const toggleFormButton = document.getElementById('toggle-form-button');
+            const newListingForm   = document.getElementById('new-listing-form');
+
+            if (user) {
+                if (toggleFormButton) {
+                    toggleFormButton.textContent = 'Yeni İlan Ekle';
+                    toggleFormButton.classList.remove('btn-secondary');
+                    toggleFormButton.classList.add('btn-primary');
+                    toggleFormButton.disabled = false;
+                }
+                fetchNotifications(user.uid);
+            } else {
+                if (toggleFormButton) {
+                    toggleFormButton.textContent = 'İlan Oluşturmak İçin Giriş Yapın';
+                    toggleFormButton.classList.remove('btn-primary');
+                    toggleFormButton.classList.add('btn-secondary');
+                    toggleFormButton.disabled = true;
+                }
+                if (newListingForm) newListingForm.style.display = 'none';
+            }
+            // İlanları her durumda yükle
+            fetchListings();
+        });
+
+        async function fetchListings() {
+            const listingsContainer = document.getElementById('job-listings-container');
+            if (!listingsContainer) return;
+
+            listingsContainer.innerHTML = '<div class="text-center py-5"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">İlanlar yükleniyor...</p></div>';
+
+            try {
+                const filterType     = document.getElementById('filter-type').value;
+                const filterWorkType = document.getElementById('filter-work-type').value;
+                const filterLocation = document.getElementById('filter-location').value;
+                const searchTerm     = document.getElementById('search-input').value.toLowerCase();
+
+                let q = db.collection('ilanlar').where('durum', '==', 'aktif');
+                if (filterType)     q = q.where('ilan_tipi', '==', filterType);
+                if (filterWorkType) q = q.where('calisma_sekli', '==', filterWorkType);
+                if (filterLocation) q = q.where('konum', '==', filterLocation);
+
+                const snapshot = await q.orderBy('eklenme_tarihi', 'desc').get();
+
+                listingsContainer.innerHTML = '';
+                let hasResults = false;
+
+                snapshot.forEach(docSnap => {
+                    const listing   = docSnap.data();
+                    const listingId = docSnap.id;
+
+                    const matchesSearch =
+                        !searchTerm ||
+                        (listing.baslik && listing.baslik.toLowerCase().includes(searchTerm)) ||
+                        (listing.aciklama && listing.aciklama.toLowerCase().includes(searchTerm)) ||
+                        (listing.poster_name && listing.poster_name.toLowerCase().includes(searchTerm));
+
+                    if (!matchesSearch) return;
+
+                    hasResults = true;
+
+                    const cardCol = document.createElement('div');
+                    cardCol.className = 'col-md-6 col-lg-4 mb-4 animate__animated animate__fadeIn';
+
+                    const date = listing.eklenme_tarihi
+                        ? new Date(listing.eklenme_tarihi.toDate()).toLocaleDateString('tr-TR')
+                        : 'Belirtilmemiş';
+
+                    const isOwner   = !!(auth.currentUser && auth.currentUser.uid === (listing.ilan_sahibi_id || ''));
+                    const safeTitle = (listing.baslik || '').replace(/"/g, '&quot;');
+                    const safeOwner = (listing.poster_name || 'İlan Sahibi').replace(/"/g, '&quot;');
+
+                    cardCol.innerHTML = `
+                        <div class="job-card">
+                          <div class="card-header">
+                            <span class="job-type ${listing.ilan_tipi || 'job-seeker'}">
+                              ${listing.ilan_tipi === 'employer' ? 'İşveren' : 'İş Arayan'}
+                            </span>
+                            <span class="poster-name"><i class="fas fa-user"></i> ${listing.poster_name || 'Anonim'}</span>
+                          </div>
+                          <div class="card-body">
+                            <h5 class="job-title">${listing.baslik || 'İsimsiz İlan'}</h5>
+                            <p class="job-description">${listing.aciklama || 'Açıklama yok'}</p>
+                            <p class="job-location"><i class="fas fa-map-marker-alt"></i> ${listing.konum || 'Konum belirtilmemiş'}</p>
+                            <p class="job-work-type"><i class="fas fa-briefcase"></i> Çalışma Şekli: ${listing.calisma_sekli || 'Belirtilmemiş'}</p>
+                          </div>
+                          <div class="card-footer">
+                            <span class="job-date me-auto">Tarih: ${date}</span>
+
+                            <button class="btn btn-sm btn-primary view-details-btn"
+                                    data-id="${listingId}">
+                              Detayları Gör
+                            </button>
+
+                            ${(!isOwner && auth.currentUser) ? `
+                              <button class="btn btn-sm btn-outline-primary ms-2 message-btn"
+                                      data-owner-id="${listing.ilan_sahibi_id || ''}"
+                                      data-owner-name="${encodeURIComponent(listing.poster_name || 'İlan Sahibi')}"
+                                      data-title="${safeTitle}">
+                                <i class="fas fa-paper-plane"></i> Mesaj Gönder
+                              </button>
+                            ` : ''}
+
+                            ${isOwner ? `
+                              <button class="btn btn-sm btn-warning ms-2 edit-listing-btn" data-id="${listingId}">
+                                <i class="fas fa-edit"></i> Düzenle
+                              </button>
+                              <button class="btn btn-sm btn-danger ms-2 delete-listing-btn" data-id="${listingId}">
+                                <i class="fas fa-trash-alt"></i> Sil
+                              </button>
+                            ` : ''}
+                          </div>
+                        </div>
+                    `;
+
+                    listingsContainer.appendChild(cardCol);
+                });
+
+                if (!hasResults) {
+                    listingsContainer.innerHTML = '<div class="col-12 text-center text-muted py-5">Aradığınız kriterlere uygun aktif ilan bulunmamaktadır.</div>';
+                }
+
+                /* Eski yöntem (butonlara tek tek listener). Event‑delegation’a geçtik.
+                document.querySelectorAll('.view-details-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const listingId = button.dataset.id;
+                        showListingDetails(listingId);
+                    });
+                });
+                document.querySelectorAll('.delete-listing-btn').forEach(button => {
+                    button.addEventListener('click', async () => {
+                        const listingId = button.dataset.id;
+                        if (confirm('Bu ilanı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+                            await deleteListing(listingId);
+                        }
+                    });
+                });
+                */
+
+            } catch (error) {
+                console.error("İlanlar getirilirken hata oluştu: ", error);
+                listingsContainer.innerHTML = '<div class="col-12 text-center text-danger py-5">İlanlar yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.</div>';
+            }
+        }
+
+        async function showListingDetails(listingId) {
+            const modalElement = document.getElementById('jobDetailModal');
+            if (!modalElement) {
+              console.warn("jobDetailModal bulunamadı. Lütfen HTML'nize modal ekleyin.");
+              return;
+            }
+
+            const modal      = new bootstrap.Modal(modalElement);
+            const modalBody  = document.getElementById('jobDetailModalBody');
+            const modalTitle = document.getElementById('jobDetailModalTitle');
+
+            modalBody.innerHTML  = '<div class="text-center text-muted py-3">Detaylar yükleniyor...</div>';
+            modalTitle.textContent = 'İlan Detayları';
+            modal.show();
+
+            try {
+                const docRef  = db.collection("ilanlar").doc(listingId);
+                const docSnap = await docRef.get();
+
+                if (docSnap.exists) {
+                    const data = docSnap.data();
+                    const eklenmeTarihi = data.eklenme_tarihi ? new Date(data.eklenme_tarihi.toDate()).toLocaleDateString('tr-TR') : 'N/A';
+                    const ilanSahibiAdi = data.poster_name || 'Bilinmiyor';
+
+                    modalTitle.textContent = data.baslik || 'İlan Detayı';
+                    modalBody.innerHTML = `
+                        <p><strong>İlan Tipi:</strong> <span class="badge ${data.ilan_tipi === 'employer' ? 'bg-success' : 'bg-primary'}">${data.ilan_tipi === 'employer' ? 'İşveren' : 'İş Arayan'}</span></p>
+                        <p><strong>İlan Sahibi:</strong> ${ilanSahibiAdi}</p>
+                        <p><strong>Konum:</strong> ${data.konum || 'Belirtilmemiş'}</p>
+                        <p><strong>Çalışma Şekli:</strong> ${data.calisma_sekli || 'Belirtilmemiş'}</p>
+                        <p><strong>Yayın Tarihi:</strong> ${eklenmeTarihi}</p>
+                        <hr>
+                        <p><strong>Açıklama:</strong></p>
+                        <p>${data.aciklama || 'Açıklama mevcut değil.'}</p>
+                    `;
+                } else {
+                    modalBody.innerHTML = '<p class="text-danger text-center py-3">İlan detayı bulunamadı.</p>';
+                    modalTitle.textContent = 'Hata';
+                }
+            } catch (error) {
+                console.error("İlan detayı getirilirken hata: ", error);
+                modalBody.innerHTML = '<p class="text-danger text-center py-3">Detaylar yüklenirken bir hata oluştu.</p>';
+                modalTitle.textContent = 'Hata';
+            }
+        }
+
+
+
+
+        // İlan listesinin container’ı (en üste ekle)
+const container = document.getElementById('job-listings-container');
+
+async function openEditForm(listingId) {
+  try {
+    const docRef  = db.collection('ilanlar').doc(listingId);
+    const docSnap = await docRef.get();
+    if (!docSnap.exists) {
+      showMessage('İlan bulunamadı.', 'danger');
+      return;
+    }
+    const data = docSnap.data();
+
+    // Formu aç ve doldur
+    const form   = document.getElementById('new-listing-form');
+    const toggle = document.getElementById('toggle-form-button');
+    form.style.display = 'block';
+    toggle.innerHTML  = '<i class="fas fa-minus-circle me-2"></i>İlan Düzenlemeyi Kapat';
+
+    document.getElementById('new-listing-id').value           = listingId;
+    document.getElementById('new-listing-type').value         = data.ilan_tipi;
+    document.getElementById('new-listing-title').value        = data.baslik;
+    document.getElementById('new-listing-description').value  = data.aciklama;
+    document.getElementById('new-listing-location').value     = data.konum;
+    document.getElementById('new-listing-work-type').value    = data.calisma_sekli;
+    document.getElementById('new-listing-poster-name').value  = data.poster_name;
+
+    document.getElementById('new-listing-submit-text').innerHTML =
+      '<i class="fas fa-save me-2"></i>İlanı Güncelle';
+  } catch (err) {
+    console.error('openEditForm hatası:', err);
+    showMessage('Düzenleme yüklenirken hata oluştu.', 'danger');
+  }
+}
+
+async function handleAddNewListing(e) {
+  e.preventDefault();
+  const user = auth.currentUser;
+  if (!user) {
+    showMessage('İlan eklemek için giriş yapmalısınız.', 'warning');
+    return;
+  }
+
+  const form           = e.target;
+  const listingId      = document.getElementById('new-listing-id').value;
+  const ilan_tipi      = form['new-listing-type'].value;
+  const baslik         = form['new-listing-title'].value;
+  const aciklama       = form['new-listing-description'].value;
+  const konum          = form['new-listing-location'].value;
+  const calisma_sekli  = form['new-listing-work-type'].value;
+  const poster_name    = form['new-listing-poster-name'].value;
+
+  if (!ilan_tipi || !baslik || !aciklama || !konum || !calisma_sekli || !poster_name) {
+    showMessage('Lütfen tüm alanları doldurun.', 'warning');
+    return;
+  }
+
+  try {
+    if (listingId) {
+      // Güncelle
+      await db.collection('ilanlar').doc(listingId).update({
+        ilan_tipi, baslik, aciklama, konum, calisma_sekli, poster_name
+      });
+      showMessage('İlanınız başarıyla güncellendi!', 'success');
+    } else {
+      // Yeni ilan
+      await db.collection('ilanlar').add({
+        ilan_tipi, baslik, aciklama, konum, calisma_sekli, poster_name,
+        ilan_sahibi_id: user.uid,
+        olusturan_email: user.email,
+        eklenme_tarihi: firebase.firestore.FieldValue.serverTimestamp(),
+        durum: 'aktif'
+      });
+      showMessage('İlanınız başarıyla eklendi!', 'success');
+    }
+
+    // Formu sıfırla ve kapat
+    form.reset();
+    document.getElementById('new-listing-id').value = '';
+    document.getElementById('new-listing-submit-text').innerHTML =
+      '<i class="fas fa-save me-2"></i>İlanı Kaydet';
+    document.getElementById('toggle-form-button').innerHTML =
+      '<i class="fas fa-plus-circle me-2"></i>Yeni İlan Ekle';
+    form.style.display = 'none';
+
+    fetchListings();
+  } catch (error) {
+    console.error("İlan işlemi hatası:", error);
+    showMessage('İlan işlemi sırasında bir hata oluştu: ' + error.message, 'danger');
+  }
+}
+
+// DOM yüklendiğinde event listener’lar
+document.addEventListener('DOMContentLoaded', () => {
+  // Form submit’e bağla
+  const newForm = document.getElementById('new-listing-form');
+  if (newForm) newForm.addEventListener('submit', handleAddNewListing);
+
+  // Delegation ile düzenle butonlarını dinle
+  if (container) {
+    container.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (btn && btn.classList.contains('edit-listing-btn')) {
+        openEditForm(btn.dataset.id);
+      }
+    });
+  }
+});
+
+
+  
+
+        async function deleteListing(listingId) {
+            const user = auth.currentUser;
+            if (!user) { showMessage('İlan silmek için giriş yapmalısınız.', 'warning'); return; }
+
+            try {
+                const listingDoc = await db.collection('ilanlar').doc(listingId).get();
+                if (listingDoc.exists && listingDoc.data().ilan_sahibi_id === user.uid) {
+                    await db.collection("ilanlar").doc(listingId).delete();
+                    showMessage('İlan başarıyla silindi!', 'success');
+                    fetchListings();
+                } else {
+                    showMessage('Bu ilanı silme yetkiniz yok.', 'danger');
+                }
+            } catch (error) {
+                console.error("İlan silinirken hata: ", error);
+                showMessage('İlan silinirken bir hata oluştu: ' + error.message, 'danger');
+            }
+        }
+
+        async function fetchNotifications(userId) {
+            console.log(`Bildirimler ${userId} için getiriliyor...`);
+            // Buraya Firestore dinleyicisi ekleyebilirsin.
+        }
+
+        // ---- Tek bir DOMContentLoaded bloğu ----
+        document.addEventListener('DOMContentLoaded', function () {
+            // Navbar scroll efekti
+            const navbar = document.querySelector('.navbar-custom');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            });
+
+            // Yeni ilan formu
+            const newListingForm = document.getElementById('new-listing-form');
+            const toggleBtn      = document.getElementById('toggle-form-button');
+            if (newListingForm) newListingForm.addEventListener('submit', handleAddNewListing);
+            if (toggleBtn && newListingForm) {
+                toggleBtn.addEventListener('click', () => {
+                    if (!auth.currentUser) { showMessage('İlan oluşturmak için giriş yapmalısınız.', 'warning'); return; }
+                    const isVisible = newListingForm.style.display === 'block';
+                    newListingForm.style.display = isVisible ? 'none' : 'block';
+                    toggleBtn.innerHTML = isVisible
+                        ? '<i class="fas fa-plus-circle me-2"></i>Yeni İlan Ekle'
+                        : '<i class="fas fa-minus-circle me-2"></i>İlan Ekleme Formunu Kapat';
+                });
+            }
+
+            // Filtre & arama
+            ['filter-type','filter-work-type','filter-location'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.addEventListener('change', fetchListings);
+            });
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                let timeout;
+                searchInput.addEventListener('keyup', () => {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(fetchListings, 500);
+                });
+            }
+            const resetBtn = document.getElementById('reset-filters');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    ['filter-type','filter-work-type','filter-location'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.value = '';
+                    });
+                    if (searchInput) searchInput.value = '';
+                    fetchListings();
+                });
+            }
+
+            // Bildirim dropdown
+            const notificationButton   = document.getElementById('notificationButton');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const markAllAsReadBtn     = document.getElementById('markAllAsRead');
+            if (notificationButton && notificationDropdown) {
+                notificationButton.addEventListener('click', e => {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('show');
+                });
+                document.addEventListener('click', e => {
+                    if (!notificationDropdown.contains(e.target) && !notificationButton.contains(e.target)) {
+                        notificationDropdown.classList.remove('show');
+                    }
+                });
+            }
+            if (markAllAsReadBtn) {
+                markAllAsReadBtn.addEventListener('click', () => {
+                    showMessage('Tüm bildirimler okundu olarak işaretlendi.', 'info', 'formMessage');
+                });
+            }
+
+            // *** İlan kartları için event‑delegation (tek dinleyici) ***
+            const container = document.getElementById('job-listings-container');
+            if (container) {
+                container.addEventListener('click', async (e) => {
+                    const btn = e.target.closest('button');
+                    if (!btn) return;
+
+                    if (btn.classList.contains('view-details-btn')) {
+                        showListingDetails(btn.dataset.id);
+                    }
+                    else if (btn.classList.contains('message-btn')) {
+                        const ownerId   = btn.dataset.ownerId;
+                        const ownerName = btn.dataset.ownerName; // encode edilmiş geliyor
+                        // mesajlar.html'e yönlendir
+                        window.location.href = `mesajlar.html?userId=${ownerId}&ownerName=${ownerName}`;
+                    }
+                    else if (btn.classList.contains('edit-listing-btn')) {
+                        openEditForm(btn.dataset.id);
+                    }
+                    else if (btn.classList.contains('delete-listing-btn')) {
+                        if (confirm('Bu ilanı silmek istediğinizden emin misiniz?')) {
+                            await deleteListing(btn.dataset.id);
+                        }
+                    }
+                });
+            }
+        });
+
+        
+
+</script>
+
+
+<script>
+(function () {
+  function setupNavbarUserState() {
+    if (typeof firebase === 'undefined' || !firebase.auth) return;
+
+    const auth = firebase.auth();
+    const db = firebase.firestore ? firebase.firestore() : null;
+    const guestSection = document.getElementById('nav-guest-section');
+    const userSection = document.getElementById('nav-user-section');
+    const profileName = document.getElementById('nav-profile-name');
+    const logoutBtn = document.getElementById('nav-logout-btn');
+
+    auth.onAuthStateChanged(async function (user) {
+      if (user) {
+        if (guestSection) guestSection.style.display = 'none';
+        if (userSection) userSection.style.display = 'list-item';
+
+        let displayName = 'Profilim';
+        try {
+          if (db) {
+            const snap = await db.collection('users').doc(user.uid).get();
+            if (snap.exists) {
+              const data = snap.data() || {};
+              displayName = [data.name, data.surname].filter(Boolean).join(' ') || data.email || user.email || 'Profilim';
+            } else {
+              displayName = user.email || 'Profilim';
+            }
+          }
+        } catch (err) {
+          displayName = user.email || 'Profilim';
+        }
+
+        if (profileName) profileName.textContent = displayName.length > 18 ? displayName.slice(0, 18) + '…' : displayName;
+      } else {
+        if (guestSection) guestSection.style.display = 'list-item';
+        if (userSection) userSection.style.display = 'none';
+      }
+    });
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async function () {
+        await auth.signOut();
+        window.location.replace('login.html');
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', setupNavbarUserState);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Başiskele Belediyesi Kariyer Platformu</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+
+  <style>
+    :root {
+      --primary-color: #005792;
+      --primary-dark: #003d66;
+      --light-blue: #e0f0ff;
+      --scrolled-nav-link: #005792;
+      --shadow-light: rgba(0,0,0,0.1);
+      --border-color: #e1e1e1;
+      --text-color: #222;
+      --text-secondary: #495057;
+      --text-muted: #6c757d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      padding-top: 70px;
+      background-color: var(--light-blue);
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      line-height: 1.5;
+      color: var(--text-color);
+      transition: opacity 0.2s ease;
+    }
+
+    .auth-loading {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Background Icons */
+    .bg-icons-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .bg-icons-container i {
+      position: absolute;
+      font-size: 2rem;
+      color: rgba(0, 0, 128, 0.5);
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(0.8); opacity: 0.4; }
+      to { transform: translateY(-20vh) scale(1.2); opacity: 1; }
+    }
+
+    .bg-icons-container i:nth-child(1)  { left: 5%;  animation-duration: 25s; animation-delay: 0s; font-size: 2.2rem; }
+    .bg-icons-container i:nth-child(2)  { left: 15%; animation-duration: 20s; animation-delay: 0s; font-size: 1.8rem; }
+    .bg-icons-container i:nth-child(3)  { left: 25%; animation-duration: 30s; animation-delay: 0s; font-size: 2.5rem; }
+    .bg-icons-container i:nth-child(4)  { left: 35%; animation-duration: 22s; animation-delay: 0s; font-size: 1.9rem; }
+    .bg-icons-container i:nth-child(5)  { left: 45%; animation-duration: 28s; animation-delay: 0s; font-size: 2.1rem; }
+    .bg-icons-container i:nth-child(6)  { left: 55%; animation-duration: 26s; animation-delay: 0s; font-size: 2.3rem; }
+    .bg-icons-container i:nth-child(7)  { left: 65%; animation-duration: 19s; animation-delay: 0s; font-size: 1.7rem; }
+    .bg-icons-container i:nth-child(8)  { left: 75%; animation-duration: 32s; animation-delay: 0s; font-size: 2.4rem; }
+    .bg-icons-container i:nth-child(9)  { left: 85%; animation-duration: 21s; animation-delay: 0s; font-size: 2.0rem; }
+    .bg-icons-container i:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 0s; font-size: 2.6rem; }
+    .bg-icons-container i:nth-child(11) { left: 10%; animation-duration: 23s; animation-delay: 0s; font-size: 1.6rem; }
+    .bg-icons-container i:nth-child(12) { left: 30%; animation-duration: 27s; animation-delay: 0s; font-size: 2.0rem; }
+    .bg-icons-container i:nth-child(13) { left: 50%; animation-duration: 20s; animation-delay: 0s; font-size: 1.9rem; }
+    .bg-icons-container i:nth-child(14) { left: 70%; animation-duration: 31s; animation-delay: 0s; font-size: 2.2rem; }
+    .bg-icons-container i:nth-child(15) { left: 90%; animation-duration: 24s; animation-delay: 0s; font-size: 1.8rem; }
+    .bg-icons-container i:nth-child(16) { left: 20%; animation-duration: 26s; animation-delay: 0s; font-size: 2.1rem; }
+    .bg-icons-container i:nth-child(17) { left: 40%; animation-duration: 18s; animation-delay: 0s; font-size: 1.7rem; }
+    .bg-icons-container i:nth-child(18) { left: 60%; animation-duration: 33s; animation-delay: 0s; font-size: 2.4rem; }
+    .bg-icons-container i:nth-child(19) { left: 80%; animation-duration: 22s; animation-delay: 0s; font-size: 2.0rem; }
+    .bg-icons-container i:nth-child(20) { left: 0%;  animation-duration: 27s; animation-delay: 0s; font-size: 2.3rem; }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar-custom {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+      z-index: 1000;
+    }
+
+    .navbar-custom.scrolled {
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .navbar-custom.scrolled .nav-link {
+      color: var(--scrolled-nav-link) !important;
+    }
+
+    .navbar-custom.scrolled .nav-link:hover,
+    .navbar-custom.scrolled .nav-link.active {
+      color: var(--primary-dark) !important;
+    }
+
+    .navbar-custom.scrolled .nav-link::after {
+      background-color: var(--scrolled-nav-link) !important;
+    }
+
+    .navbar-custom.scrolled .navbar-nav .nav-link.active::after {
+      background-color: var(--primary-dark) !important;
+    }
+
+    .navbar-custom .nav-item {
+      opacity: 0;
+      animation: fadeInDown 0.5s ease forwards;
+    }
+
+    .navbar-custom .nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .navbar-custom .nav-item:nth-child(2) { animation-delay: 0.2s; }
+    .navbar-custom .nav-item:nth-child(3) { animation-delay: 0.3s; }
+    .navbar-custom .nav-item:nth-child(4) { animation-delay: 0.4s; }
+    .navbar-custom .nav-item:nth-child(5) { animation-delay: 0.5s; }
+
+    .navbar-custom .nav-link {
+      position: relative;
+      color: var(--primary-color);
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .navbar-custom .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .navbar-custom .nav-link:hover {
+      color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    .navbar-custom .nav-link:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    .navbar-nav .nav-link.active {
+      color: var(--primary-dark) !important;
+      font-weight: 700;
+    }
+
+    .navbar-nav .nav-link.active::after {
+      background-color: var(--primary-dark) !important;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+      border-radius: 15px;
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://www.transparenttextures.com/patterns/clean-textile.png');
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .hero-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-section h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .hero-section p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease-out 0.3s;
+      animation-fill-mode: both;
+    }
+
+    .hero-buttons .btn {
+      font-size: 1.1rem;
+      padding: 12px 30px;
+      border-radius: 30px;
+      margin: 0 10px;
+      animation: zoomIn 1s ease-out 0.6s;
+      animation-fill-mode: both;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hero-buttons .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-primary-custom {
+      background-color: #ffc107;
+      color: var(--primary-dark);
+      border: none;
+    }
+
+    .btn-primary-custom:hover {
+      background-color: #e0a800;
+      color: var(--primary-dark);
+    }
+
+    .btn-outline-light-custom {
+      border: 2px solid white;
+      color: white;
+      background-color: transparent;
+    }
+
+    .btn-outline-light-custom:hover {
+      background-color: white;
+      color: var(--primary-color);
+    }
+
+    .info-box {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+    }
+
+    .info-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,87,146,0.2);
+    }
+
+    .info-box .icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      animation: bounceIn 1s ease-out;
+    }
+
+    .info-box h3 {
+      font-size: 1.75rem;
+      color: var(--primary-dark);
+      margin-bottom: 15px;
+    }
+
+    .info-box p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .stats-section {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 60px 0;
+      border-radius: 15px;
+      margin-top: 50px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-item {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .stat-item .count {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #ffc107;
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .stat-item .label {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    footer {
+      background-color: var(--primary-dark);
+      color: #ffffff;
+      padding: 40px 0 20px;
+      font-size: 0.9rem;
+      margin-top: 50px;
+    }
+
+    .footer-section {
+      margin-bottom: 20px;
+    }
+
+    .footer-section h5 {
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .footer-section ul {
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.85);
+      transition: color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .footer-section a:hover {
+      color: #a0cfff;
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .footer-logo {
+      width: 180px;
+      margin-bottom: 15px;
+    }
+
+    .social-media-links {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      transform: translateY(-5px) rotate(10deg) scale(1.1);
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-icon.facebook:hover { color: #1877f2; }
+    .social-icon.twitter:hover { color: #1da1f2; }
+    .social-icon.instagram:hover { color: #c13584; }
+    .social-icon.youtube:hover { color: #ff0000; }
+
+    .notification-dropdown {
+      position: relative;
+      display: flex;
+      align-items: center;
+      margin-left: 15px;
+    }
+
+    .notification-button {
+      background: none;
+      border: none;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: relative;
+      padding: 5px 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-button:hover {
+      color: var(--primary-dark);
+      background-color: rgba(0, 87, 146, 0.1);
+      transform: scale(1.1);
+    }
+
+    .notification-button .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.3em 0.6em;
+      border-radius: 50%;
+      background-color: #dc3545;
+      color: white;
+      font-size: 0.7em;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      transform: translate(50%, -50%);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .notification-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #fefefe;
+      min-width: 300px;
+      max-width: 350px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      border-radius: 10px;
+      z-index: 1001;
+      margin-top: 10px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      animation: slideInDown 0.3s ease-out forwards;
+    }
+
+    @keyframes slideInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .notification-content.show {
+      display: block;
+    }
+
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 15px;
+      background-color: var(--primary-dark);
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .notification-header button {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: all 0.2s ease;
+    }
+
+    .notification-header button:hover {
+      background-color: rgba(255,255,255,0.2);
+      border-color: white;
+    }
+
+    .notification-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 250px;
+      overflow-y: auto;
+      background-color: #fdfdfd;
+    }
+
+    .notification-item {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.2s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .notification-item.unread {
+      background-color: var(--light-blue);
+      font-weight: 500;
+    }
+
+    .notification-item:hover {
+      background-color: #e9f5ff;
+    }
+
+    .notification-item .icon {
+      font-size: 1.2em;
+      color: var(--primary-color);
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .notification-item .details {
+      flex-grow: 1;
+    }
+
+    .notification-item .title {
+      font-weight: 600;
+      color: var(--primary-dark);
+      margin-bottom: 3px;
+    }
+
+    .notification-item .message-text {
+      font-size: 0.9em;
+      color: var(--text-secondary);
+    }
+
+    .notification-item .time-ago {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    .no-notifications {
+      padding: 20px 15px;
+      text-align: center;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .notification-footer {
+      padding: 10px 15px;
+      text-align: center;
+      border-top: 1px solid #eee;
+      background-color: #f0f7ff;
+    }
+
+    .notification-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 55px 15px;
+        margin-top: 20px;
+        border-radius: 0;
+      }
+
+      .hero-section h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-buttons .btn {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      .notification-dropdown {
+        margin-left: 0;
+        margin-top: 10px;
+        justify-content: center;
+      }
+
+      .notification-content {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  </style>
+</head>
+
+<body class="auth-loading" data-auth-page="protected">
+  <div class="bg-icons-container">
+    <i class="fas fa-building"></i>
+    <i class="fas fa-users"></i>
+    <i class="fas fa-briefcase"></i>
+    <i class="fas fa-city"></i>
+    <i class="fas fa-laptop-code"></i>
+    <i class="fas fa-search"></i>
+    <i class="fas fa-handshake"></i>
+    <i class="fas fa-file-alt"></i>
+    <i class="fas fa-chart-line"></i>
+    <i class="fas fa-globe"></i>
+    <i class="fas fa-lightbulb"></i>
+    <i class="fas fa-rocket"></i>
+    <i class="fas fa-user-tie"></i>
+    <i class="fas fa-envelope"></i>
+    <i class="fas fa-map-marker-alt"></i>
+    <i class="fas fa-cogs"></i>
+    <i class="fas fa-dollar-sign"></i>
+    <i class="fas fa-shield-alt"></i>
+    <i class="fas fa-check-circle"></i>
+    <i class="fas fa-id-card"></i>
+  </div>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-custom">
+    <div class="container">
+      <a class="navbar-brand" href="anasayfa.html">
+        <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo" height="60">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a class="nav-link active" href="anasayfa.html">Anasayfa</a></li>
+          <li class="nav-item"><a class="nav-link" href="ilanlar.html">İlanlar</a></li>
+          <li class="nav-item"><a class="nav-link" href="mesajlar.html">Mesajlar</a></li>
+          <li class="nav-item"><a class="nav-link" href="iletisim.html">İletişim</a></li>
+
+          <li class="nav-item" id="nav-guest-section" style="display: none;">
+            <a href="login.html" class="btn btn-primary btn-sm ms-lg-3">Giriş Yap / Kayıt Ol</a>
+          </li>
+
+          <li class="nav-item dropdown" id="nav-user-section" style="display: none;">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle me-1 align-middle"></i> Profilim
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="user_dashboard.html">Panelim</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item" id="nav-logout-btn" type="button">Çıkış Yap</button></li>
+            </ul>
+          </li>
+
+          <li class="nav-item notification-dropdown">
+            <button class="notification-button" id="notificationButton" type="button" aria-expanded="false" aria-haspopup="true">
+              <i class="fas fa-bell"></i>
+              <span class="badge" id="notificationCountBadge" style="display: none;">0</span>
+            </button>
+
+            <div class="notification-content" id="notificationDropdown">
+              <div class="notification-header">
+                <span>Bildirimler</span>
+                <button id="markAllAsRead" type="button">Tümünü Oku</button>
+              </div>
+
+              <ul class="notification-list" id="notificationList">
+                <li class="no-notifications">Yeni bildiriminiz yok.</li>
+              </ul>
+
+              <div class="notification-footer">
+                <a href="#">Tüm Bildirimleri Gör</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <h1 class="animate__animated animate__fadeInDown">Başiskele Belediyesi Kariyer Platformu</h1>
+        <p class="animate__animated animate__fadeInUp">İş arayanlar ve işverenleri bir araya getiren yenilikçi platform.</p>
+        <div class="hero-buttons">
+          <a href="ilanlar.html" class="btn btn-primary-custom animate__animated animate__zoomIn">
+            İlanları Görüntüle <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+          <a href="ilanlar.html" class="btn btn-outline-light-custom animate__animated animate__zoomIn">
+            İlan Ver <i class="fas fa-paper-plane ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container py-5">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="info-box">
+            <div class="icon animate__animated animate__bounceIn"><i class="fas fa-search"></i></div>
+            <h3>İş Arayanlar İçin</h3>
+            <p>Kendinize en uygun iş ilanlarını kolayca bulun. Filtreleme seçenekleri ile hayalinizdeki işe ulaşın.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="info-box">
+            <div class="icon animate__animated animate__bounceIn" style="animation-delay: 0.2s;"><i class="fas fa-building"></i></div>
+            <h3>İşverenler İçin</h3>
+            <p>Nitelikli çalışan arayışınıza hızlı ve etkili çözümler bulun. İlan verin ve doğru adayı bulun.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="info-box">
+            <div class="icon animate__animated animate__bounceIn" style="animation-delay: 0.4s;"><i class="fas fa-handshake"></i></div>
+            <h3>Kolay İletişim</h3>
+            <p>İlan sahipleriyle anında mesajlaşarak detayları öğrenin. Kariyer yolculuğunuzda yalnız değilsiniz.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <div class="container">
+        <h2 class="text-center mb-5 animate__animated animate__fadeIn">Platform İstatistikleri</h2>
+        <div class="row">
+          <div class="col-md-4 stat-item">
+            <div class="count" data-target="5000">0</div>
+            <div class="label">Aktif İş Arayan</div>
+          </div>
+
+          <div class="col-md-4 stat-item">
+            <div class="count" data-target="1500">0</div>
+            <div class="label">Güncel İş İlanı</div>
+          </div>
+
+          <div class="col-md-4 stat-item">
+            <div class="count" data-target="1000">0</div>
+            <div class="label">Kaydolan İşveren</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4 footer-section d-flex flex-column align-items-center">
+          <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png"
+               alt="Başiskele Belediyesi Logo"
+               class="footer-logo" />
+          <p>Serdar, Selahattin Eyyubi Cd. No:1, 41190 Başiskele/Kocaeli</p>
+          <p>Tel: 444 4110</p>
+          <p>Email: info@basiskele.bel.tr</p>
+          <p>Çalışma Saatleri: Hafta içi 08:30 - 17:30</p>
+        </div>
+
+        <div class="col-md-4 footer-section">
+          <h5>Hızlı Bağlantılar</h5>
+          <ul>
+            <li><a href="anasayfa.html">Anasayfa</a></li>
+            <li><a href="ilanlar.html">İlanlar</a></li>
+            <li><a href="ilanlar.html">İlan Ver</a></li>
+            <li><a href="mesajlar.html">Mesajlar</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 footer-section">
+          <h5>Sosyal Medya</h5>
+          <div class="social-media-links">
+            <a href="https://www.facebook.com/basiskelebelediyesi/" target="_blank" class="social-icon facebook" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://x.com/Basiskele_Bld" target="_blank" class="social-icon twitter" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/basiskelebelediyesi/" target="_blank" class="social-icon instagram" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UCf6yfjmywY_h02Hzp0w8_uQ" target="_blank" class="social-icon youtube" aria-label="Youtube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row footer-bottom text-center">
+        <p>© 2025 Başiskele Belediyesi Kariyer Platformu. Tüm hakları saklıdır.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyALJWbNPziCXnjbgAwbGxpeRafO0O29fy4",
+      authDomain: "belediye-kariyer-project.firebaseapp.com",
+      projectId: "belediye-kariyer-project",
+      storageBucket: "belediye-kariyer-project.firebasestorage.app",
+      messagingSenderId: "1018107908919",
+      appId: "1:1018107908919:web:b750dff35acbed659d80b2",
+      measurementId: "G-NZN8NGWDT7"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const auth = firebase.auth();
+
+    function showPage() {
+      document.body.classList.remove("auth-loading");
+    }
+
+    auth.onAuthStateChanged(user => {
+      const guestSection = document.getElementById("nav-guest-section");
+      const userSection = document.getElementById("nav-user-section");
+
+      if (!user) {
+        window.location.replace("login.html");
+        return;
+      }
+
+      if (guestSection) guestSection.style.display = "none";
+      if (userSection) userSection.style.display = "block";
+
+      showPage();
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const navbar = document.querySelector(".navbar-custom");
+
+      if (navbar) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 50) {
+            navbar.classList.add("scrolled");
+          } else {
+            navbar.classList.remove("scrolled");
+          }
+        });
+      }
+
+      const counters = document.querySelectorAll(".count");
+      const statsSection = document.querySelector(".stats-section");
+      const speed = 200;
+      let countersAnimated = false;
+
+      function runCounters() {
+        if (countersAnimated) return;
+        countersAnimated = true;
+
+        counters.forEach(counter => {
+          const target = Number(counter.getAttribute("data-target")) || 0;
+
+          function updateCount() {
+            const count = Number(counter.innerText.replace(/\D/g, "")) || 0;
+            const inc = Math.max(target / speed, 1);
+
+            if (count < target) {
+              counter.innerText = Math.ceil(count + inc);
+              setTimeout(updateCount, 15);
+            } else {
+              counter.innerText = target.toLocaleString("tr-TR");
+            }
+          }
+
+          updateCount();
+        });
+      }
+
+      if (statsSection) {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              runCounters();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
+      }
+
+      const notifications = [];
+      const notificationButton = document.getElementById("notificationButton");
+      const notificationDropdown = document.getElementById("notificationDropdown");
+      const notificationList = document.getElementById("notificationList");
+      const notificationCountBadge = document.getElementById("notificationCountBadge");
+      const markAllAsReadButton = document.getElementById("markAllAsRead");
+
+      function updateBadge() {
+        if (!notificationCountBadge) return;
+
+        const unreadCount = notifications.filter(n => !n.read).length;
+        notificationCountBadge.textContent = unreadCount;
+        notificationCountBadge.style.display = unreadCount > 0 ? "flex" : "none";
+      }
+
+      function renderNotifications() {
+        if (!notificationList) return;
+
+        notificationList.innerHTML = "";
+
+        if (notifications.length === 0) {
+          notificationList.innerHTML = '<li class="no-notifications">Yeni bildiriminiz yok.</li>';
+        } else {
+          notifications.forEach(notif => {
+            const item = document.createElement("li");
+            item.className = `notification-item ${!notif.read ? "unread" : ""}`;
+            item.innerHTML = `
+              <div class="icon"><i class="${notif.icon}"></i></div>
+              <div class="details">
+                <div class="title">${notif.title}</div>
+                <div class="message-text">${notif.message}</div>
+                <div class="time-ago">${notif.time}</div>
+              </div>
+            `;
+            notificationList.appendChild(item);
+          });
+        }
+
+        updateBadge();
+      }
+
+      if (notificationButton && notificationDropdown) {
+        notificationButton.addEventListener("click", e => {
+          e.stopPropagation();
+          notificationDropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", e => {
+          if (!notificationDropdown.contains(e.target) && !notificationButton.contains(e.target)) {
+            notificationDropdown.classList.remove("show");
+          }
+        });
+      }
+
+      if (markAllAsReadButton) {
+        markAllAsReadButton.addEventListener("click", () => {
+          notifications.forEach(n => n.read = true);
+          renderNotifications();
+          if (notificationDropdown) notificationDropdown.classList.remove("show");
+        });
+      }
+
+      renderNotifications();
+
+      const logoutBtn = document.getElementById("nav-logout-btn");
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", async () => {
+          try {
+            await auth.signOut();
+          } finally {
+            window.location.replace("login.html");
+          }
+        });
+      }
+    });
+  </script>
+  <script src="js/basiskele-ui.js"></script>
+</body>
+</html>

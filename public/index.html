@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giriş / Üyelik - Başiskele Belediyesi Kariyer Platformu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      flex-direction: column;
+      padding: 1rem;
+    }
+    .login-card {
+      background-color: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-card h2 {
+      margin-bottom: 30px;
+      text-align: center;
+      color: #333;
+    }
+    .btn-custom {
+      background-color: #005792;
+      border-color: #005792;
+    }
+    .btn-custom:hover {
+      background-color: #003d66;
+      border-color: #003d66;
+    }
+    .general-message {
+      display: none;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      width: 100%;
+      max-width: 400px;
+    }
+    .general-message.danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+    .general-message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    #reset-password-container {
+      display: none;
+      margin-top: 1rem;
+    }
+    #reset-password-container h5 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Genel Başarı/Hata Mesajı -->
+  <div id="generalErrorMessage" class="general-message"></div>
+
+  <div class="login-card">
+    <h2>Kariyer Platformu</h2>
+    <form id="mainLoginForm">
+      <div class="mb-3">
+        <label for="userEmail" class="form-label">E-posta Adresi</label>
+        <input type="email" id="userEmail" class="form-control" autocomplete="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="userPassword" class="form-label">Şifre</label>
+        <input type="password" id="userPassword" class="form-control" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 btn-custom">Giriş Yap</button>
+    </form>
+
+    <p class="text-end mt-2 mb-0">
+      <a href="#" id="forgot-password-link">Şifremi Unuttum?</a>
+    </p>
+
+    <div id="reset-password-container">
+      <h5>Şifre Sıfırlama</h5>
+      <div class="mb-3">
+        <input type="email" id="reset-email" class="form-control" placeholder="E-posta adresinizi girin" required>
+      </div>
+      <button id="reset-password-btn" class="btn btn-warning w-100">Şifre Sıfırlama Maili Gönder</button>
+      <p id="reset-message" class="mt-2 text-center"></p>
+    </div>
+
+    <hr class="my-4">
+
+    <button type="button" class="btn btn-secondary w-100 mt-2" id="showAdminLoginModalBtn">Yetkili Girişi</button>
+    <button type="button" class="btn btn-success w-100 mt-2" id="showRegisterModalBtn">Üyelik Oluştur</button>
+  </div>
+
+  <!-- Yetkili Girişi Modalı -->
+  <div class="modal fade" id="adminLoginModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Yetkili Girişi</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="adminLoginFormModal">
+          <div class="mb-3">
+            <label for="adminModalEmail" class="form-label">Email Adresi</label>
+            <input type="email" id="adminModalEmail" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="adminModalPassword" class="form-label">Şifre</label>
+            <input type="password" id="adminModalPassword" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 btn-custom">Giriş Yap</button>
+        </form>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Kayıt Modalı -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Yeni Üyelik Oluştur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="registerForm">
+          <div class="mb-3"><label for="registerName" class="form-label">Adınız</label>
+            <input type="text" id="registerName" class="form-control" required></div>
+          <div class="mb-3"><label for="registerSurname" class="form-label">Soyadınız</label>
+            <input type="text" id="registerSurname" class="form-control" required></div>
+          <div class="mb-3"><label for="registerPhone" class="form-label">Telefon</label>
+            <div class="input-group">
+              <span class="input-group-text">+90</span>
+              <input type="tel" id="registerPhone" class="form-control" placeholder="5XX XXX XX XX" maxlength="10">
+            </div></div>
+          <div class="mb-3"><label for="registerAddress" class="form-label">Adres</label>
+            <input type="text" id="registerAddress" class="form-control"></div>
+          <div class="mb-3"><label for="registerEmail" class="form-label">E-posta</label>
+            <input type="email" id="registerEmail" class="form-control" required></div>
+          <div class="mb-3"><label for="registerPassword" class="form-label">Şifre</label>
+            <input type="password" id="registerPassword" class="form-control" required></div>
+          <div class="mb-3"><label for="registerPasswordConfirm" class="form-label">Şifre Tekrar</label>
+            <input type="password" id="registerPasswordConfirm" class="form-control" required></div>
+          <button type="submit" class="btn btn-success w-100">Üyelik Oluştur</button>
+        </form>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- Bootstrap bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Firebase compat SDK’ları (login.js’den önce) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Kendi login.js’in -->
+  <script src="login.js"></script>
+  <script src="js/basiskele-ui.js"></script>
+</body>
+</html>

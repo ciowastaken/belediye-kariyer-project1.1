@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kariyer / İstihdam - Admin Paneli</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+
+  <style>
+
+.auth-loading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body {
+  transition: opacity 0.2s ease;
+}
+    body { background:#f8f9fa; }
+    .stat-card { box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+    .table thead { background:#005792; color:#fff; }
+    .filter-group { max-width:400px; }
+
+    /* ====== Mesajlaşma özel CSS ====== */
+    #mesajlasma-yonetimi{ margin-bottom:4rem; }    /* bölüm alt nefes */
+    #chat-users-list{ max-height:350px; overflow-y:auto; }
+    #chat-users-list .active{
+      background:#0d6efd;
+      color:#fff;
+      font-weight:600;
+    }
+    #chat-users-list .list-group-item:hover:not(.active){
+      background:#e7f1ff;
+      cursor:pointer;
+    }
+
+ 
+    body { background: #f8f9fa; }
+  .stat-card { box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+  .table thead { background: #005792; color: #fff; }
+  .filter-group { max-width: 400px; }
+
+  /* ====== Mesajlaşma özel CSS ====== */
+  #mesajlasma-yonetimi { margin-bottom: 4rem; }
+
+  /* Kişiler kartı */
+  #chat-users-list { max-height: 400px; overflow-y: auto; }
+  #chat-users-list .list-group-item.active {
+    background: #0d6efd;
+    color: #fff;
+    font-weight: 600;
+  }
+  #chat-users-list .list-group-item:hover:not(.active) {
+    background: #e7f1ff;
+    cursor: pointer;
+  }
+
+  /* Chat penceresi */
+  #chat-window {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;            /* İki balon arasına mesafe */
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: .5rem;
+  min-height: 300px;
+  overflow-y: auto;
+}
+
+  /* Balon ortak stil */
+  .msg {
+  display: inline-block;             /* İçeriğe göre genişlik */
+  max-width: 80%;                    /* Çok uzun satır sarması için sınırlama */
+  padding: .75rem 1.25rem;           /* Üst-alt .75, sağ-sol 1.25rem */
+  border-radius: 1.25rem;
+  line-height: 1.4;
+  position: relative;
+  word-wrap: break-word;
+  animation: fadeInUp 0.25s ease both;
+}
+
+  /* Gönderen balonu (sağ) */
+  .from-me {
+  align-self: flex-end;
+  background: #0d6efd;
+  color: #fff;
+  border-bottom-right-radius: .25rem;
+}
+.from-me::after {
+  /* küçültülmüş kuyruk */
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: .75rem;
+  border: 6px solid transparent;
+  border-top-color: #0d6efd;
+  transform: translateY(100%);
+}
+
+  /* Alan balonu (sol) */
+  .from-them {
+  align-self: flex-start;
+  background: #e9ecef;
+  color: #212529;
+  border-bottom-left-radius: .25rem;
+}
+
+.from-them::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: .75rem;
+  border: 6px solid transparent;
+  border-top-color: #e9ecef;
+  transform: translateY(100%);
+}
+
+  /* Sil icon */
+  .msg .delete-icon {
+  position: absolute;
+  top: .5rem;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: color .2s;
+}
+.from-me .delete-icon { right: 1rem; color: rgba(255,255,255,0.8); }
+.from-them .delete-icon { right: 1rem; color: rgba(0,0,0,0.5); }
+.msg .delete-icon:hover { color: currentColor; }
+
+  /* Animasyon */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Fade-in animasyonu */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+
+    #chat-window {
+  background: #fefefe;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+    @media (max-width:767px){
+      #chat-users-list{ max-height:200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Kariyer / İstihdam Projesi Admin Paneli</a>
+      <button id="adminLogoutBtn" class="btn btn-outline-danger">Çıkış Yap</button>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+
+    <!-- Loading -->
+    <div id="loading-indicator" class="text-center my-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-2">Yetki kontrol ediliyor ve veriler yükleniyor…</p>
+    </div>
+
+    <!-- Admin İçerik -->
+    <div id="admin-content" class="d-none" data-aos="fade-up">
+
+      <!-- İstatistik Kartları -->
+      <div class="row mb-4">
+        <div class="col-md-6" data-aos="fade-right">
+          <div class="card stat-card bg-primary text-white p-3 mb-3">
+            <div class="card-body text-center">
+              <h5 id="total-listings-count" class="card-title display-4">0</h5>
+              <p>Toplam İlan</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+          <div class="card stat-card bg-success text-white p-3 mb-3">
+            <div class="card-body text-center">
+              <h5 id="total-users-count" class="card-title display-4">0</h5>
+              <p>Toplam Kullanıcı</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- İlan Yönetimi -->
+      <section class="mb-5" data-aos="fade-up">
+        <h3>İlan Yönetimi</h3>
+        <div class="d-flex align-items-center filter-group mb-3">
+          <input id="ilan-search" class="form-control me-2" placeholder="İlan başlığı, sahip veya konumda ara…">
+          <select id="ilan-status-filter" class="form-select w-auto">
+            <option value="">Tüm Durumlar</option>
+            <option value="aktif">Aktif</option>
+            <option value="pasif">Pasif</option>
+          </select>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Başlık</th><th>Sahip</th><th>Konum</th>
+                <th>Tarih</th><th>Durum</th><th>Detay</th><th>DM</th><th>Sil</th>
+              </tr>
+            </thead>
+            <tbody id="ilanlar-tablosu">
+              <tr><td colspan="8" class="text-center">Yükleniyor…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Kullanıcı Yönetimi -->
+      <section class="mt-5" data-aos="fade-up">
+        <h3>Kullanıcı Yönetimi</h3>
+        <div class="d-flex align-items-center filter-group mb-3">
+          <input id="user-search" class="form-control" placeholder="Kullanıcı adı veya email'de ara…">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Ad Soyad</th><th>Email</th><th>Rol</th><th>Kayıt Tarihi</th><th>Sil</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <tr><td colspan="5" class="text-center">Yükleniyor…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Mesajlaşma Yönetimi -->
+      <section id="mesajlasma-yonetimi" class="mt-2" style="padding-bottom:20px" data-aos="fade-up">
+        <h3>Mesajlaşma</h3>
+        <div class="row">
+          <!-- Sol sütun -->
+          <div class="col-md-3">
+            <div class="card mb-3">
+              <div class="card-header bg-primary text-white">
+                <i class="fas fa-users me-2"></i> Kişiler
+              </div>
+              <ul id="chat-users-list" class="list-group list-group-flush" style="max-height:400px; overflow-y:auto;">
+                <!-- loadChatUsersList() ile <li> eklenecek -->
+                <li class="list-group-item text-center text-muted py-4">Yükleniyor…</li>
+              </ul>
+            </div>
+          </div>
+          
+
+          <!-- Sağ sütun -->
+          <div class="col-md-9 d-flex flex-column">
+            <button id="clear-chat" class="btn btn-danger btn-sm mb-2 align-self-start">
+              <i class="fas fa-trash-alt"></i> Tümünü Sil
+            </button>
+
+            <div id="chat-window" class="flex-grow-1 overflow-auto border rounded p-3 mb-2"
+                 style="min-height:300px;"></div>
+
+            <div class="input-group">
+              <input id="message-input" class="form-control" placeholder="Mesajınızı yazın…"/>
+              <button id="send-message-btn" class="btn btn-primary">Gönder</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bildirim Şablonları / Zamanlanmış Bildirimler bölümleriniz burada… -->
+
+    </div>
+  </div>
+
+  <!-- Firebase Compat -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- AOS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+
+  <!-- Admin Logic -->
+  <script src="admin.js"></script>
+
+  <!-- İlan Detay Modalı -->
+  <div class="modal fade" id="ilan-detail-modal" tabindex="-1" aria-labelledby="ilanDetailLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ilanDetailLabel">İlan Detayları</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <h5 id="detail-baslik">–</h5>
+          <p id="detail-aciklama">–</p>
+          <h6>Ekstralar:</h6>
+          <ul id="detail-ekstralar" class="list-group list-group-flush"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/basiskele-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!-- Include this right before the closing body tag of each HTML file -->
+<script src="logo-update.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const navbarBrands = document.querySelectorAll('.navbar-brand');
+      navbarBrands.forEach(brand => {
+        const img = brand.querySelector('img');
+        if (img) {
+          img.src = "https://www.upload.ee/image/18331315/yenilogo_05032018095240.jpg";
+          img.style.height = "50px";
+          img.style.width = "auto";
+        }
+      });
+    });
+  </script>
+  
+  <script src="js/basiskele-ui.js"></script>

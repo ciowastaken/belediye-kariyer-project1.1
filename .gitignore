@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.*
+dist/
+build/
+.next/
+.vite/
+.firebase/
+coverage/
+*.log
+.DS_Store

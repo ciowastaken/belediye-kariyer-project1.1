@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+
+
+    <!-- Firebase SDK’ları yüklendikten hemen sonra -->
+
+
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Başiskele Belediyesi Kariyer Platformu - İletişim</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- 1) Firebase App & Auth SDK’ları (compat sürüm) -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+        <!-- Eğer Firestore, Database vb kullanıyorsanız onları da ekleyin -->
+        <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+        
+<!-- Firebase SDK’ları yüklendikten hemen sonra -->
+<script>
+    // — Firebase konfigürasyonu —
+    const firebaseConfig = {
+      apiKey: "AIzaSyALJWbNPziCXnjbgAwbGxpeRafO0O29fy4",
+      authDomain: "belediye-kariyer-project.firebaseapp.com",
+      projectId: "belediye-kariyer-project",
+      storageBucket: "belediye-kariyer-project.firebasestorage.app",
+      messagingSenderId: "1018107908919",
+      appId: "1:1018107908919:web:b750dff35acbed659d80b2",
+      measurementId: "G-NZN8NGWDT7"
+    };
+    // — Firebase’i başlat —
+    firebase.initializeApp(firebaseConfig);
+    // — Kullandığın global objeler —
+    const auth = firebase.auth();
+    const db   = firebase.firestore();
+    // — Boş bildirim dizisi —
+   
+  // Firebase init’ten sonra:
+  let notifications = [];
+
+  function updateNotificationUI() {
+    const listEl = document.getElementById('notificationList');
+    const badge  = document.getElementById('notificationCountBadge');
+    listEl.innerHTML = '';
+
+    // okunmamış sayısını hesapla
+    const unreadCount = notifications.filter(n => !n.read).length;
+
+    if (notifications.length === 0) {
+      listEl.innerHTML = '<li class="no-notifications">Henüz yeni bildiriminiz yok.</li>';
+    } else {
+      notifications.forEach(notif => {
+        const item = document.createElement('li');
+        item.className = `notification-item ${notif.read ? '' : 'unread'}`;
+        item.innerHTML = `
+          <i class="fas ${notif.icon} icon"></i>
+          <div class="details">
+            <div class="title">${notif.title}</div>
+            <div class="message-text">${notif.message}</div>
+            <div class="time-ago">${notif.time}</div>
+          </div>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    badge.textContent = unreadCount;
+    badge.style.display = unreadCount > 0 ? 'flex' : 'none';
+  }
+
+  function fetchNotifications(userId) {
+    db.collection('notifications')
+      .where('userId', '==', userId)
+      .where('read', '==', false)
+      .orderBy('timestamp', 'desc')
+      .limit(10)
+      .get()
+      .then(snapshot => {
+        notifications = [];
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          notifications.push({
+            icon: data.icon || 'envelope',
+            title: data.title,
+            message: data.message,
+            time: new Date(data.timestamp.toDate()).toLocaleTimeString('tr-TR'),
+            read: false
+          });
+        });
+        updateNotificationUI();
+      })
+      .catch(err => console.error("Bildirimler alınamadı:", err));
+  }
+
+  // Kullanıcı oturum açınca:
+  auth.onAuthStateChanged(user => {
+    if (user) fetchNotifications(user.uid);
+  });
+</script>
+
+
+    
+
+
+    <style>
+        /* CSS Değişkenleri - ilanlar.html ve mesajlar.html'den alındı */
+        :root {
+            --primary-color: #005792;
+            --primary-dark: #003d66;
+            --light-blue: #e0f0ff;
+            --scrolled-nav-link: #5098f6;
+            --shadow-light: rgba(0,0,0,0.1);
+            --shadow-medium: rgba(0,0,0,0.15);
+            --shadow-heavy: rgba(0,87,146,0.25);
+            --border-color: #e1e1e1;
+            --text-color: #222;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+        }
+
+        /* Global & Body - ilanlar.html ve mesajlar.html'den alındı */
+        body {
+            padding-top: 60px; /* Navbar'ın yüksekliği kadar boşluk */
+            background-color: var(--light-blue);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            line-height: 1.5;
+            color: var(--text-color);
+            overflow-x: hidden; /* Yatay kaydırmayı engelle */
+        }
+
+        /* Arka Plan İkonları - ilanlar.html ve mesajlar.html'den alındı */
+  /* --- Corporate Icon Background Animation --- */
+.bg-icons-container {
+    position: fixed; /* Sabit konumda kalır */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Tüm ekranı kaplar */
+    pointer-events: none; /* İkonların tıklanmasını engeller */
+    overflow: hidden; /* Taşmaları gizler */
+    z-index: -1; /* İçeriğin arkasında kalır */
+}
+
+.bg-icons-container i {
+    position: absolute;
+    font-size: 2rem;
+    color: rgba(0, 0, 128, 0.5); /* Opaklık artırıldı: 0.25'ten 0.5'e */
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(100vh) scale(0.8); opacity: 0.4; } /* Başlangıç opaklığı artırıldı: 0.2'den 0.4'e */
+    to   { transform: translateY(-20vh) scale(1.2); opacity: 1; } /* Bitiş opaklığı artırıldı: 0.9'dan 1'e */
+}
+
+/* Her bir ikon için farklı animasyon özellikleri - daha çeşitli başlama zamanları */
+/* Her ikon sayfaya girer girmez hareket edecek şekilde delay sıfırlandı,
+   yeni ikonlar ekleyerek sayıları arttırabilirsiniz */
+.bg-icons-container i:nth-child(1)  { left: 5%;  animation-duration: 25s; animation-delay: 0s; font-size: 2.2rem; }
+.bg-icons-container i:nth-child(2)  { left: 15%; animation-duration: 20s; animation-delay: 0s; font-size: 1.8rem; }
+.bg-icons-container i:nth-child(3)  { left: 25%; animation-duration: 30s; animation-delay: 0s; font-size: 2.5rem; }
+.bg-icons-container i:nth-child(4)  { left: 35%; animation-duration: 22s; animation-delay: 0s; font-size: 1.9rem; }
+.bg-icons-container i:nth-child(5)  { left: 45%; animation-duration: 28s; animation-delay: 0s; font-size: 2.1rem; }
+.bg-icons-container i:nth-child(6)  { left: 55%; animation-duration: 26s; animation-delay: 0s; font-size: 2.3rem; }
+.bg-icons-container i:nth-child(7)  { left: 65%; animation-duration: 19s; animation-delay: 0s; font-size: 1.7rem; }
+.bg-icons-container i:nth-child(8)  { left: 75%; animation-duration: 32s; animation-delay: 0s; font-size: 2.4rem; }
+.bg-icons-container i:nth-child(9)  { left: 85%; animation-duration: 21s; animation-delay: 0s; font-size: 2.0rem; }
+.bg-icons-container i:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 0s; font-size: 2.6rem; }
+.bg-icons-container i:nth-child(11) { left: 10%; animation-duration: 23s; animation-delay: 0s; font-size: 1.6rem; }
+.bg-icons-container i:nth-child(12) { left: 30%; animation-duration: 27s; animation-delay: 0s; font-size: 2.0rem; }
+.bg-icons-container i:nth-child(13) { left: 50%; animation-duration: 20s; animation-delay: 0s; font-size: 1.9rem; }
+.bg-icons-container i:nth-child(14) { left: 70%; animation-duration: 31s; animation-delay: 0s; font-size: 2.2rem; }
+.bg-icons-container i:nth-child(15) { left: 90%; animation-duration: 24s; animation-delay: 0s; font-size: 1.8rem; }
+.bg-icons-container i:nth-child(16) { left: 20%; animation-duration: 26s; animation-delay: 0s; font-size: 2.1rem; }
+.bg-icons-container i:nth-child(17) { left: 40%; animation-duration: 18s; animation-delay: 0s; font-size: 1.7rem; }
+.bg-icons-container i:nth-child(18) { left: 60%; animation-duration: 33s; animation-delay: 0s; font-size: 2.4rem; }
+.bg-icons-container i:nth-child(19) { left: 80%; animation-duration: 22s; animation-delay: 0s; font-size: 2.0rem; }
+.bg-icons-container i:nth-child(20) { left: 0%;  animation-duration: 27s; animation-delay: 0s; font-size: 2.3rem; }
+
+/* Yeni ikonlar eklemek için HTML'de <i> etiketleri arttırın,
+   burada da aynısını stil olarak tanımlayın: */
+.bg-icons-container i:nth-child(21) { left: 12%; animation-duration: 24s; animation-delay: 0s; font-size: 2rem; }
+.bg-icons-container i:nth-child(22) { left: 28%; animation-duration: 29s; animation-delay: 0s; font-size: 1.8rem; }
+.bg-icons-container i:nth-child(23) { left: 48%; animation-duration: 21s; animation-delay: 0s; font-size: 2.2rem; }
+
+        /* Navbar - ilanlar.html ve mesajlar.html'den alındı */
+        .navbar-custom {
+            position: fixed; top: 0; width: 100%;
+            background: transparent;
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1000;
+        }
+        .navbar-custom.scrolled {
+            background: var(--light-blue); /* Değişkenden renk */
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px var(--shadow-light); /* Değişkenden gölge */
+        }
+        .navbar-custom .navbar-brand img {
+            height: 60px; /* diğer sayfalarla uyumlu */
+        }
+        .navbar-custom .nav-link {
+            position: relative;
+            color: var(--primary-color); /* Değişkenden renk */
+            transition: color 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+        }
+        .navbar-custom .nav-link::after {
+            content: ''; position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 2px;
+            background: var(--primary-color); /* Değişkenden renk */
+            transition: width 0.3s ease, left 0.3s ease;
+        }
+        .navbar-custom .nav-link:hover {
+            color: var(--primary-dark); /* Değişkenden renk */
+            transform: translateY(-3px);
+        }
+        .navbar-custom .nav-link:hover::after { width: 100%; left: 0; }
+        .navbar-custom .nav-item { opacity: 0; animation: fadeInDown 0.5s ease forwards; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        /* Stagger delays for nav items */
+        .navbar-custom .nav-item:nth-child(1) { animation-delay: 0.1s; }
+        .navbar-custom .nav-item:nth-child(2) { animation-delay: 0.2s; }
+        .navbar-custom .nav-item:nth-child(3) { animation-delay: 0.3s; }
+        .navbar-custom .nav-item:nth-child(4) { animation-delay: 0.4s; }
+        .navbar-nav .nav-link.active {
+            color: var(--primary-dark) !important; /* Değişkenden renk */
+            font-weight: 700;
+        }
+        .navbar-nav .nav-link.active::after { background-color: var(--primary-dark) !important; } /* Değişkenden renk */
+
+        /* Scrolled Navbar specific styles - ilanlar.html ve mesajlar.html'den alındı */
+        .navbar-custom.scrolled .nav-link { color: var(--scrolled-nav-link) !important; }
+        .navbar-custom.scrolled .nav-link:hover,
+        .navbar-custom.scrolled .nav-link.active { color: #e4dcdc !important; } /* Biraz daha açık kontrast için */
+        .navbar-custom.scrolled .nav-link::after { background-color: #fff !important; }
+        .navbar-custom.scrolled .navbar-nav .nav-link.active { color: var(--scrolled-nav-link) !important; }
+
+        /* İletişim Sayfası Stilleri */
+        .contact-section {
+            padding: 60px 0;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+
+        .contact-section h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-dark); /* Değişkenden renk */
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-secondary); /* Değişkenden renk */
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info p i {
+            color: var(--primary-color); /* Değişkenden renk */
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+
+        .contact-form .form-label {
+            font-weight: 600;
+            color: var(--primary-color); /* Değişkenden renk */
+        }
+
+        .contact-form .form-control {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color); /* Değişkenden renk */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form .form-control:focus {
+            border-color: var(--primary-color); /* Değişkenden renk */
+            box-shadow: 0 0 0 0.25rem rgba(0, 87, 146, 0.25); /* Değişkenden renk ile uyumlu */
+        }
+
+        .contact-form .btn-primary-custom {
+            background-color: var(--primary-color); /* Değişkenden renk */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .contact-form .btn-primary-custom:hover {
+            background-color: var(--primary-dark); /* Değişkenden renk */
+            transform: translateY(-2px);
+        }
+
+        .map-container-inner {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow-light); /* Değişkenden gölge */
+            margin-top: 30px;
+            height: 250px;
+        }
+
+        .map-container-inner iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Footer Stilleri - ilanlar.html ve mesajlar.html'den alındı */
+        footer {
+            background-color: var(--primary-dark); /* Değişkenden renk */
+            color: #ffffff;
+            padding: 40px 0 20px;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+
+        .footer-section {
+            margin-bottom: 20px;
+        }
+
+        .footer-section h5 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-section ul {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.85);
+            transition: color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .footer-section a:hover {
+            color: #a0cfff;
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            text-align: center;
+        }
+
+        .footer-logo {
+            width: 140px;
+            margin-bottom: 15px;
+        }
+
+        .social-media-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) rotate(10deg) scale(1.1);
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .social-icon.facebook:hover {
+            color: #1877f2;
+        }
+
+        .social-icon.twitter:hover {
+            color: #1da1f2;
+        }
+
+        .social-icon.instagram:hover {
+            color: #c13584;
+        }
+
+        .social-icon.youtube:hover {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) { /* Responsive ayarlamalar */
+            .bg-icons-container i {
+                font-size: 1.5rem; /* Mobil cihazlarda ikonları küçült */
+            }
+        }
+
+        /* --- Bildirim Kutusu CSS --- */
+        .notification-dropdown {
+            position: relative; display: flex; align-items: center; margin-left: 15px;
+        }
+        .notification-button {
+            background: none; border: none; color: var(--primary-color); font-size: 1.5rem;
+            cursor: pointer; position: relative; padding: 5px 10px; border-radius: 50%;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+        }
+        .notification-button:hover {
+            color: var(--primary-dark); background-color: rgba(0, 87, 146, 0.1); transform: scale(1.1);
+        }
+        .notification-button .badge {
+            position: absolute; top: 0px; right: 0px; padding: 0.3em 0.6em; border-radius: 50%;
+            background-color: #dc3545; color: white; font-size: 0.7em; font-weight: bold;
+            display: flex; align-items: center; justify-content: center; min-width: 20px; height: 20px;
+            transform: translate(50%, -50%); box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .notification-content {
+            display: none; position: absolute; top: 100%; right: 0; background-color: #fefefe;
+            min-width: 300px; max-width: 350px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 10px; z-index: 1001; margin-top: 10px; border: 1px solid var(--border-color);
+            overflow: hidden; animation: slideInDown 0.3s ease-out forwards;
+        }
+        @keyframes slideInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .notification-content.show { display: block; }
+        .notification-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 12px 15px;
+            background-color: var(--primary-dark); color: white; border-bottom: 1px solid rgba(255,255,255,0.2);
+            font-weight: 600; font-size: 1.1em;
+        }
+        .notification-header button {
+            background: none; border: 1px solid rgba(255,255,255,0.5); color: white; padding: 5px 10px;
+            border-radius: 5px; cursor: pointer; font-size: 0.8em; transition: all 0.2s ease;
+        }
+        .notification-header button:hover { background-color: rgba(255,255,255,0.2); border-color: white; }
+        .notification-list { list-style: none; padding: 0; margin: 0; max-height: 250px; overflow-y: auto; background-color: #fdfdfd; }
+        .notification-item { padding: 12px 15px; border-bottom: 1px solid #eee; transition: background-color 0.2s ease; display: flex; align-items: flex-start; gap: 10px; }
+        .notification-item.unread { background-color: var(--light-blue); font-weight: 500; }
+        .notification-item:hover { background-color: #e9f5ff; }
+        .notification-item .icon { font-size: 1.2em; color: var(--primary-color); flex-shrink: 0; padding-top: 2px; }
+        .notification-item .details { flex-grow: 1; }
+        .notification-item .title { font-weight: 600; color: var(--primary-dark); margin-bottom: 3px; }
+        .notification-item .message-text { font-size: 0.9em; color: var(--text-secondary); }
+        .notification-item .time-ago { font-size: 0.8em; color: var(--text-muted); margin-top: 5px; text-align: right; }
+        .no-notifications { padding: 20px 15px; text-align: center; color: var(--text-muted); font-style: italic; }
+        .notification-footer { padding: 10px 15px; text-align: center; border-top: 1px solid #eee; background-color: #f0f7ff; }
+        .notification-footer a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .navbar-custom.scrolled .notification-button { color: var(--scrolled-nav-link) !important; }
+        .navbar-custom.scrolled .notification-button:hover { color: #e4dcdc !important; background-color: rgba(255, 255, 255, 0.2) !important; }
+    </style>
+</head>
+<body>
+    <div class="bg-icons-container">
+        <i class="fas fa-briefcase"></i>
+        <i class="fas fa-comments"></i>
+        <i class="fas fa-users"></i>
+        <i class="fas fa-chart-line"></i>
+        <i class="fas fa-handshake"></i>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo" height="60">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ilanlar.html">İlanlar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mesajlar.html">Mesajlar</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="iletisim.html">İletişim</a></li>
+                    <li class="nav-item dropdown" id="nav-user-section" style="display: none;">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <li class="nav-item dropdown" id="nav-user-section" style="display: none;">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                  <i class="fas fa-user-circle me-1 align-middle"></i> Profilim
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="user_dashboard.html">Panelim</a></li>
+                                  <li><hr class="dropdown-divider"></li>
+                                  <li><button class="dropdown-item" id="nav-logout-btn">Çıkış Yap</button></li>
+                                </ul>
+                              </li>
+                              
+                      
+                    <li class="nav-item notification-dropdown">
+                        <button class="notification-button" id="notificationButton" aria-expanded="false" aria-haspopup="true">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notificationCountBadge" style="display: none;">0</span>
+                        </button>
+                        <div class="notification-content" id="notificationDropdown">
+                            <div class="notification-header">
+                                <span>Bildirimler</span>
+                                <button id="markAllAsRead">Tümünü Oku</button>
+                            </div>
+                            <ul class="notification-list" id="notificationList">
+                                <!-- Bildirimler buraya eklenecek -->
+                            </ul>
+                            <div class="notification-footer">
+                                <a href="#">Tüm Bildirimleri Gör</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <section class="contact-section">
+            <div class="container">
+                <h2 class="animate__animated animate__fadeInDown">İletişim</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4 mb-md-0 animate__animated animate__fadeInLeft">
+                        <h3 class="mb-4">Bize Ulaşın</h3>
+                        <p class="contact-info"><i class="fas fa-map-marker-alt"></i> Serdar, Selahattin Eyyubi Cd. No:1, 41190 Başiskele/Kocaeli</p>
+                        <p class="contact-info"><i class="fas fa-phone"></i> Tel: 444 4110</p>
+                        <p class="contact-info"><i class="fas fa-envelope"></i> Email: info@basiskele.bel.tr</p>
+                        <p class="contact-info"><i class="fas fa-clock"></i> Çalışma Saatleri: Hafta içi 08:30 - 17:30</p>
+                        
+                        <div class="map-container-inner mt-4">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3023.2386419799295!2d29.929828415392095!3d40.73030387933182!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x140b2f9e0e0a5c4d%3A0x6b7b2a9e3d7a8c3e!2zQmHFnyBpc2tlbGUgQmVpZWRpeWVzaSDEsWVsZXp6bSBNw7xkcsO8bMO8xJ_Dv8O8!5e0!3m2!1str!2str!4v1678912345678!5m2!1str!2str" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+
+                        <div class="social-media-links justify-content-start gap-3 mt-4">
+                            <a href="https://www.facebook.com/basiskelebld" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://x.com/basiskelebel" target="_blank" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://www.instagram.com/basiskelebel/" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.youtube.com/@basiskelebelediyesi" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-6 animate__animated animate__fadeInRight">
+                        <h3 class="mb-4">Mesaj Gönderin</h3>
+                        <form class="contact-form">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Adınız Soyadınız</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">E-posta Adresiniz</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Konu</label>
+                                <input type="text" class="form-control" id="subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Mesajınız</label>
+                                <textarea class="form-control" id="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom">Mesajı Gönder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 footer-section d-flex flex-column align-items-center">
+                    <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo" class="footer-logo" width="180" />
+                    <p>Serdar, Selahattin Eyyubi Cd. No:1, 41190 Başiskele/Kocaeli</p>
+                    <p>Tel: 444 4110</p>
+                    <p>Email: info@basiskele.bel.tr</p>
+                    <p>Çalışma Saatleri: Hafta içi 08:30 - 17:30</p>
+                </div>
+                <div class="col-md-4 footer-section">
+                    <h5>Hızlı Bağlantılar</h5>
+                    <ul>
+                        <li><a href="index.html">Anasayfa</a></li>
+                        <li><a href="ilanlar.html">İlanlar</a></li>
+                        <li><a href="mesajlar.html">Mesajlar</a></li>
+                        <li><a href="iletisim.html">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 footer-section">
+                    <h5>Sosyal Medya</h5>
+                    <div class="social-media-links">
+                        <a href="https://www.facebook.com/basiskelebld" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/basiskelebel" target="_blank" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/basiskelebel/" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@basiskelebelediyesi" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bottom">
+                <div class="col-12 text-center">
+                    <p>© 2025 Başiskele Belediyesi Kariyer Platformu. Tüm hakları saklıdır.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Navbar Scroll Effect
+            const navbar = document.querySelector('.navbar-custom');
+            if (navbar) { // Navbar'ın varlığını kontrol et
+                window.addEventListener('scroll', function () {
+                    if (window.scrollY > 50) { // 50px aşağı kaydırıldığında
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            }
+
+            // Active Navbar Link based on current page
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active'); // Tüm linklerden 'active' sınıfını kaldır
+                const linkHref = link.getAttribute('href').split('/').pop(); // Sadece dosya adını al
+                if (linkHref === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+
+            // --- Notification Dropdown Logic ---
+            const notificationButton = document.getElementById('notificationButton');
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const notificationList = document.getElementById('notificationList');
+            const notificationCountBadge = document.getElementById('notificationCountBadge');
+            const markAllAsReadButton = document.getElementById('markAllAsRead');
+
+            
+
+            function updateNotificationUI() {
+                const notificationList = document.getElementById('notificationList');
+  const badge            = document.getElementById('notificationCountBadge');
+  notificationList.innerHTML = '';
+
+  // 🔥 işte burası ekleniyor:
+  const unreadCount = notifications.filter(n => !n.read).length;
+
+  if (notifications.length === 0) {
+    notificationList.innerHTML = '<li class="no-notifications">Henüz yeni bildiriminiz yok.</li>';
+  } else {
+    notifications.forEach(notif => {
+      const item = document.createElement('li');
+      item.className = `notification-item ${notif.read ? '' : 'unread'}`;
+      item.innerHTML = `
+       <div class="icon"><i class="fas fa-${notif.icon}"></i></div>
+        <div class="details">
+         <div class="title">${notif.title}</div>
+          <div class="message-text">${notif.message}</div>
+          <div class="time-ago">${notif.time}</div>
+                  </div>
+      `;
+      notificationList.appendChild(item);
+    });
+  }
+
+  badge.textContent = unreadCount;
+  badge.style.display = unreadCount > 0 ? 'inline-flex' : 'none';
+}
+
+            if (notificationButton) {
+                notificationButton.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    notificationDropdown.classList.toggle('show');
+                });
+            }
+
+            if (markAllAsReadButton) {
+                markAllAsReadButton.addEventListener('click', () => {
+                    notifications.forEach(n => n.read = true);
+                    updateNotificationUI();
+                });
+            }
+
+            window.addEventListener('click', (e) => {
+                if (notificationDropdown && !notificationDropdown.contains(e.target) && !notificationButton.contains(e.target)) {
+                    notificationDropdown.classList.remove('show');
+                }
+            });
+
+            updateNotificationUI();
+        });
+    </script>
+
+<script>
+
+  
+    // Bildirimleri getir
+    function fetchNotifications(userId) {
+  db.collection('notifications')
+    .where('userId', '==', userId)
+    .where('read', '==', false)
+    .orderBy('timestamp', 'desc')
+    .limit(10)
+    .get()
+    .then(snapshot => {
+      // Her çağrıda eski diziyi temizle
+      notifications = [];
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        notifications.push({
+          icon: data.icon || 'envelope',
+          title: data.title,
+          message: data.message,
+          time: new Date(data.timestamp.toDate()).toLocaleTimeString('tr-TR'),
+          read: false
+        });
+      });
+
+      updateNotificationUI();
+    })
+    .catch(error => {
+      console.error("Bildirimler alınamadı:", error);
+    });
+}
+    // Oturum açınca çalıştır
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        fetchNotifications(user.uid);
+      }
+    });
+  </script>
+<script src="js/basiskele-ui.js"></script>
+</body>
+</html>

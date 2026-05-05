@@ -1,0 +1,102 @@
+/* --- Corporate Icon Background Animation --- */
+.bg-icons-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+.bg-icons-container i {
+  position: absolute;
+  font-size: 2rem;
+  color: rgba(0,87,146,0.07);
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  from { transform: translateY(100vh) scale(0.8); }
+  to   { transform: translateY(-10vh) scale(1); }
+}
+.bg-icons-container i:nth-child(1) { left:  5%;  animation-duration: 25s; animation-delay:  0s; }
+.bg-icons-container i:nth-child(2) { left: 25%;  animation-duration: 20s; animation-delay:  5s; }
+.bg-icons-container i:nth-child(3) { left: 45%;  animation-duration: 30s; animation-delay:  2s; }
+.bg-icons-container i:nth-child(4) { left: 65%;  animation-duration: 22s; animation-delay:  8s; }
+.bg-icons-container i:nth-child(5) { left: 85%;  animation-duration: 28s; animation-delay:  4s; }
+.bg-icons-container i:nth-child(6) { left: 15%;  animation-duration: 26s; animation-delay:  3s; }
+.bg-icons-container i:nth-child(7) { left: 35%;  animation-duration: 24s; animation-delay:  6s; }
+.bg-icons-container i:nth-child(8) { left: 55%;  animation-duration: 21s; animation-delay:  1s; }
+.bg-icons-container i:nth-child(9) { left: 75%;  animation-duration: 27s; animation-delay:  9s; }
+.bg-icons-container i:nth-child(10) { left: 95%; animation-duration: 23s; animation-delay:  7s; }
+.bg-icons-container i:nth-child(11) { left: 10%; animation-duration: 29s; animation-delay:  2s; }
+.bg-icons-container i:nth-child(12) { left: 30%; animation-duration: 20s; animation-delay:  5s; }
+
+/* Navbar animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.navbar-custom {
+  position: fixed;
+  top: 0; width: 100%;
+  background: transparent;
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+}
+.navbar-custom.scrolled {
+  background: hsl(209, 37%, 66%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Keep nav-link text white on scrolled navbar */
+.navbar-custom.scrolled .nav-link {
+  color: #fff !important;
+}
+.navbar-custom.scrolled .nav-link:hover,
+.navbar-custom.scrolled .nav-link.active {
+  color: #fff !important;
+}
+/* Underline indicator also white */
+.navbar-custom.scrolled .nav-link::after {
+  background-color: #fff !important;
+}
+
+/* nav‐item fadeIn on load */
+.navbar-custom .nav-item {
+  opacity: 0;
+  animation: fadeInDown 0.5s ease forwards;
+}
+
+/* stagger delays */
+.navbar-custom .nav-item:nth-child(1) { animation-delay: 0.1s; }
+.navbar-custom .nav-item:nth-child(2) { animation-delay: 0.2s; }
+.navbar-custom .nav-item:nth-child(3) { animation-delay: 0.3s; }
+.navbar-custom .nav-item:nth-child(4) { animation-delay: 0.4s; }
+.navbar-custom .nav-item:nth-child(5) { animation-delay: 0.5s; }
+
+/* underline hover effect */
+.navbar-custom .nav-link {
+  position: relative;
+  color: #005792;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.navbar-custom .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 2px;
+  background: #005792;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+.navbar-custom .nav-link:hover {
+  color: #003d66;
+  transform: translateY(-3px);
+}
+.navbar-custom .nav-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* ensure body padding so content isn't hidden under fixed navbar */
+body { padding-top: 60px; }
