@@ -383,3 +383,21 @@ footer a:hover {
 
 
 }
+/* --- 2026 kurumsal ortak UI iyileştirmesi --- */
+:root{--primary-color:#005792;--primary-dark:#003d66;--surface:#ffffff;--muted:#6c757d;--radius:14px;}
+.navbar-custom{backdrop-filter: blur(8px);border-bottom:1px solid rgba(0,87,146,.08);}
+.navbar-custom .nav-link{border-radius:10px;padding:.5rem .85rem !important;}
+.navbar-custom .nav-link.active{background:rgba(0,87,146,.12);} 
+.btn,.btn-contact,#send-message{border-radius:999px;font-weight:600;}
+.page-header,.hero,.feature-box,.story-card,.job-card,.messages-container{border-radius:var(--radius);} 
+.job-card{border:1px solid rgba(0,87,146,.12)}
+footer{margin-top:2rem;}
+@media (max-width: 991.98px){
+  body{padding-top:76px;}
+  .navbar-collapse{background:#fff;border-radius:12px;padding:.75rem;box-shadow:0 10px 24px rgba(0,0,0,.08);margin-top:.5rem;}
+  .job-card .card-footer .btn{flex:1 1 100%;}
+}
+@media (max-width: 575.98px){
+  .hero,.page-header{padding:16px;}
+  .job-card{padding:14px;}
+}
