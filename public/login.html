@@ -722,14 +722,15 @@
                             <div class="col-md-6">
                                 <label class="form-label">Şifre</label>
                                 <div class="password-wrap">
-                                    <input type="password" id="registerPassword" class="form-control" required>
+                                    <input type="password" id="registerPassword" class="form-control" minlength="8" autocomplete="new-password" aria-describedby="registerPasswordHelp" required>
                                     <button type="button" class="password-toggle" data-toggle-password="registerPassword" aria-label="Şifreyi göster">👁</button>
                                 </div>
+                                <small id="registerPasswordHelp" class="form-text text-muted">En az 8 karakter, 1 büyük harf, 1 küçük harf ve 1 özel karakter içermeli.</small>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Şifre Tekrar</label>
                                 <div class="password-wrap">
-                                    <input type="password" id="registerPasswordConfirm" class="form-control" required>
+                                    <input type="password" id="registerPasswordConfirm" class="form-control" minlength="8" autocomplete="new-password" required>
                                     <button type="button" class="password-toggle" data-toggle-password="registerPasswordConfirm" aria-label="Şifreyi göster">👁</button>
                                 </div>
                             </div>

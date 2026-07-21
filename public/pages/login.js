@@ -16,6 +16,12 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 const LOGIN_PAGES = new Set(['', 'index', 'index.html', 'login', 'login.html']);
+const PASSWORD_RULES = {
+  minLength: 8,
+  uppercase: /[A-ZÇĞİÖŞÜ]/,
+  lowercase: /[a-zçğıöşü]/,
+  special: /[!@#$%^&*()_\-+=\[\]{};':"\\|,.<>/?`~]/
+};
 
 function getCurrentPageName() {
   return (window.location.pathname.split('/').filter(Boolean).pop() || '').toLowerCase();
@@ -204,23 +210,23 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (pass.length < 8) {
-      showRegisterMessage('Şifre en az 8 karakter olmalıdır.');
+    if (pass.length < PASSWORD_RULES.minLength) {
+      showRegisterMessage(`Şifre en az ${PASSWORD_RULES.minLength} karakter olmalıdır.`);
       return;
     }
 
-    if (!/[A-Z]/.test(pass)) {
+    if (!PASSWORD_RULES.uppercase.test(pass)) {
       showRegisterMessage('Şifre en az bir büyük harf içermelidir.');
       return;
     }
 
-    if (!/[a-z]/.test(pass)) {
+    if (!PASSWORD_RULES.lowercase.test(pass)) {
       showRegisterMessage('Şifre en az bir küçük harf içermelidir.');
       return;
     }
 
-    if (/[^a-zA-Z0-9]/.test(pass)) {
-      showRegisterMessage('Şifre özel karakter içermemelidir.');
+    if (!PASSWORD_RULES.special.test(pass)) {
+      showRegisterMessage('Şifre en az bir özel karakter içermelidir.');
       return;
     }
 
@@ -251,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (code.includes('email-already-in-use')) {
         showRegisterMessage('Bu e-posta zaten kullanımda.');
       } else if (code.includes('weak-password')) {
-        showRegisterMessage('Şifre en az 6 karakter olmalı.');
+        showRegisterMessage('Şifre en az 8 karakter, 1 büyük harf, 1 küçük harf ve 1 özel karakter içermeli.');
       } else {
         showRegisterMessage('Kayıt hatası: ' + err.message);
       }

@@ -65,6 +65,18 @@
     return date.toLocaleDateString('tr-TR', { day: '2-digit', month: 'short', year: 'numeric' });
   }
 
+  function formatWorkType(value) {
+    const labels = {
+      'tam-zamanli': 'Tam zamanlı',
+      'yari-zamanli': 'Yarı zamanlı',
+      uzaktan: 'Uzaktan',
+      staj: 'Staj',
+      donemsel: 'Dönemsel',
+      yevmiyeli: 'Yevmiyeli'
+    };
+    return labels[value] || value || '';
+  }
+
   function showMessage(message, type = 'info') {
     if (window.BasiskeleUI?.toast) window.BasiskeleUI.toast(message, type);
     if (!refs.formMessage) return;
@@ -224,6 +236,7 @@
       const ownerName = listing.poster_name || getOwnerName(listing.ilan_sahibi_id);
       const typeLabel = listing.ilan_tipi === 'employer' ? 'İşveren' : 'İş Arayan';
       const typeClass = listing.ilan_tipi === 'employer' ? 'success' : '';
+      const workTypeLabel = formatWorkType(listing.calisma_sekli);
 
       return `
         <div class="col-md-6 col-xl-4">
@@ -238,7 +251,7 @@
               <div class="job-meta-list">
                 <span><i class="fas fa-building"></i>${escapeHTML(ownerName || 'İlan sahibi')}</span>
                 <span><i class="fas fa-map-marker-alt"></i>${escapeHTML(listing.konum || 'Konum belirtilmedi')}</span>
-                <span><i class="fas fa-briefcase"></i>${escapeHTML(listing.calisma_sekli || 'Çalışma şekli belirtilmedi')}</span>
+                <span><i class="fas fa-briefcase"></i>${escapeHTML(workTypeLabel || 'Çalışma şekli belirtilmedi')}</span>
                 ${listing.kategori ? `<span><i class="fas fa-layer-group"></i>${escapeHTML(listing.kategori)}</span>` : ''}
                 ${listing.maas ? `<span><i class="fas fa-wallet"></i>${escapeHTML(listing.maas)}</span>` : ''}
                 ${listing.deneyim ? `<span><i class="fas fa-award"></i>${escapeHTML(listing.deneyim)}</span>` : ''}
@@ -246,7 +259,7 @@
             </div>
             <div class="card-footer">
               <button class="btn btn-sm btn-primary view-details-btn" data-id="${listing.id}">
-                Detay
+                <i class="fas fa-eye me-1"></i>Detay
               </button>
               ${state.user && !isOwner && listing.ilan_sahibi_id ? `
                 <button class="btn btn-sm btn-outline-primary message-btn" data-owner-id="${escapeHTML(listing.ilan_sahibi_id)}" data-owner-name="${encodeURIComponent(ownerName || 'İlan Sahibi')}">
