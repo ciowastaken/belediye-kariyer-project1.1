@@ -33,9 +33,6 @@
                 radial-gradient(circle at 15% 15%, rgba(22, 163, 74, 0.22), transparent 28%),
                 radial-gradient(circle at 85% 20%, rgba(0, 165, 194, 0.24), transparent 32%),
                 linear-gradient(135deg, #e7f2fb 0%, #f7fafc 52%, #e8fff2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         body::before,
@@ -71,20 +68,22 @@
 
         .login-page {
             width: 100%;
-            min-height: 100vh;
-            min-height: 100dvh;
+            height: 100vh;
+            height: 100svh;
+            height: 100dvh;
             max-width: none;
             display: grid;
             grid-template-columns: minmax(620px, 1fr) minmax(390px, 500px);
             gap: clamp(28px, 5vw, 82px);
             align-items: center;
             padding: 0 clamp(22px, 4vw, 72px) 0 0;
+            overflow: hidden;
         }
 
         .intro-panel {
-            min-height: 100vh;
-            min-height: 100dvh;
-            padding: clamp(46px, 6vw, 92px);
+            height: 100%;
+            min-height: 0;
+            padding: clamp(36px, 5vw, 76px);
             border-radius: 0 34px 34px 0;
             color: white;
             position: relative;
@@ -186,7 +185,14 @@
             width: 100%;
             max-width: 490px;
             justify-self: center;
+            max-height: calc(100dvh - 32px);
+            overflow-y: auto;
+            scrollbar-width: none;
             animation: slideInRight 0.85s ease both;
+        }
+
+        .login-area::-webkit-scrollbar {
+            display: none;
         }
 
         .general-message {
@@ -494,22 +500,30 @@
 
         @media (max-width: 900px) {
             body {
-                align-items: flex-start;
                 padding: 14px;
             }
 
             .login-page {
                 grid-template-columns: 1fr;
                 max-width: 520px;
-                min-height: auto;
+                height: auto;
+                min-height: 100dvh;
                 gap: 16px;
                 padding: 0;
+                margin: 0 auto;
+                overflow: visible;
             }
 
             .intro-panel {
+                height: auto;
                 min-height: auto;
                 padding: 30px;
                 border-radius: 30px;
+            }
+
+            .login-area {
+                max-height: none;
+                overflow: visible;
             }
 
             .feature-list {
