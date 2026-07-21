@@ -20,6 +20,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
+window.BasiskeleAuthSignOut = () => signOut(auth);
 
 // --- MESAJ GÖSTERME FONKSİYONU ---
 function showMessage(message, type = 'info') {
@@ -34,6 +35,7 @@ function showMessage(message, type = 'info') {
 
 // --- ANA FONKSİYONLAR ---
 let currentUserData = null;
+let listenersBound = false;
 
 // Kullanıcı bilgilerini Firestore'dan çekip formu doldurur
 async function loadUserProfile(user) {
@@ -86,6 +88,7 @@ async function handleProfileUpdate(e) {
 
         await updateDoc(doc(db, 'users', user.uid), updateData);
         showMessage('Profil bilgileri başarıyla güncellendi!', 'success');
+        currentUserData = { ...(currentUserData || {}), ...updateData, photoURL };
     } catch (error) {
         console.error("Profil güncellenirken hata:", error);
         showMessage(`Bir hata oluştu: ${error.message}`, 'danger');
@@ -153,14 +156,23 @@ async function handleLogout() {
 
 // --- SAYFA YÜKLENDİĞİNDE ÇALIŞACAK KODLAR ---
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('profilePicUpload')?.addEventListener('change', (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        document.getElementById('profilePicPreview').src = URL.createObjectURL(file);
+    });
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             // Kullanıcı giriş yapmış, fonksiyonları ve olay dinleyicilerini bağla
             loadUserProfile(user);
-            document.getElementById('userProfileForm').addEventListener('submit', handleProfileUpdate);
-            document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
-            document.getElementById('deleteAccountBtn').addEventListener('click', handleDeleteAccount);
-            document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+            if (!listenersBound) {
+                document.getElementById('userProfileForm').addEventListener('submit', handleProfileUpdate);
+                document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
+                document.getElementById('deleteAccountBtn').addEventListener('click', handleDeleteAccount);
+                document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+                listenersBound = true;
+            }
         } else {
             // Kullanıcı giriş yapmamış, login sayfasına yönlendir
             window.location.href = 'index.html';

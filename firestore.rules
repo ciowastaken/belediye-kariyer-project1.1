@@ -1,9 +1,90 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Sadece oturum açmış kullanıcılar tüm verilere erişebilir
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function hasMyProfile() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function myProfile() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return hasMyProfile() &&
+        (myProfile().isAdmin == true || myProfile().role in ['admin', 'yetkili']);
+    }
+
+    function changedProtectedUserFields() {
+      return request.resource.data.diff(resource.data).affectedKeys()
+        .hasAny(['role', 'isAdmin', 'roleUpdatedAt', 'roleUpdatedBy']);
+    }
+
+    function participates(participants) {
+      return signedIn() && participants is list && request.auth.uid in participants;
+    }
+
+    match /users/{userId} {
+      allow read: if signedIn();
+      allow create: if isOwner(userId)
+        && (!request.resource.data.keys().hasAny(['role']) || request.resource.data.role == 'user')
+        && (!request.resource.data.keys().hasAny(['isAdmin']) || request.resource.data.isAdmin == false);
+      allow update: if isAdmin() || (isOwner(userId) && !changedProtectedUserFields());
+      allow delete: if isAdmin() || isOwner(userId);
+
+      match /notifications/{notificationId} {
+        allow read, update, delete: if isAdmin() || isOwner(userId);
+        allow create: if signedIn();
+      }
+    }
+
+    match /ilanlar/{listingId} {
+      allow read: if resource.data.durum == 'aktif'
+        || isAdmin()
+        || isOwner(resource.data.ilan_sahibi_id);
+      allow create: if signedIn()
+        && request.resource.data.ilan_sahibi_id == request.auth.uid
+        && request.resource.data.durum == 'aktif';
+      allow update, delete: if isAdmin() || isOwner(resource.data.ilan_sahibi_id);
+    }
+
+    match /messages/{messageId} {
+      allow read: if isAdmin() || participates(resource.data.participants);
+      allow create: if participates(request.resource.data.participants)
+        && request.resource.data.sender == request.auth.uid;
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == resource.data.sender);
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == resource.data.sender);
+    }
+
+    match /templates/{templateId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /scheduledNotifications/{scheduleId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /notifications/{notificationId} {
+      allow read, update, delete: if isAdmin()
+        || (signedIn() && resource.data.userId == request.auth.uid);
+      allow create: if signedIn();
+    }
+
+    match /support_messages/{messageId} {
+      allow create: if signedIn();
+      allow read, update, delete: if isAdmin();
+    }
+
     match /{document=**} {
-      allow read, write: if request.auth != null;
+      allow read, write: if isAdmin();
     }
   }
 }

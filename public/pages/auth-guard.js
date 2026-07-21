@@ -33,7 +33,9 @@
     async function isAdminUser(user) {
       try {
         const snap = await db.collection("users").doc(user.uid).get();
-        return snap.exists && snap.data().isAdmin === true;
+        if (!snap.exists) return false;
+        const data = snap.data() || {};
+        return data.isAdmin === true || data.role === "admin" || data.role === "yetkili";
       } catch (error) {
         console.error("Admin kontrol hatası:", error);
         return false;

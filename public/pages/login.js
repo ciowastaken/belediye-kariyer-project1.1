@@ -70,7 +70,9 @@ function setButtonLoading(button, loading, loadingText = 'İşleniyor...') {
 async function isAdminUser(user) {
   try {
     const snap = await db.collection('users').doc(user.uid).get();
-    return snap.exists && snap.data().isAdmin === true;
+    if (!snap.exists) return false;
+    const data = snap.data() || {};
+    return data.isAdmin === true || data.role === 'admin' || data.role === 'yetkili';
   } catch {
     return false;
   }
@@ -206,8 +208,10 @@ document.addEventListener('DOMContentLoaded', () => {
         surname,
         phone,
         address,
+        role: 'user',
         isAdmin: false,
-        kayit_tarihi: firebase.firestore.FieldValue.serverTimestamp()
+        kayit_tarihi: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
 
       showRegisterMessage('Üyelik oluşturuldu! Giriş yapabilirsiniz.', 'success');

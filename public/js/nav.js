@@ -479,7 +479,11 @@
 
     logoutButton?.addEventListener('click', async () => {
       try {
-        if (window.firebase?.auth) await window.firebase.auth().signOut();
+        if (typeof window.BasiskeleAuthSignOut === 'function') {
+          await window.BasiskeleAuthSignOut();
+        } else if (window.firebase?.auth) {
+          await window.firebase.auth().signOut();
+        }
       } catch (error) {
         console.warn('Çıkış işlemi tamamlanamadı:', error);
       } finally {

@@ -1,135 +1,171 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hesap Ayarları - Başiskele Belediyesi Kariyer Platformu</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome CSS (İkonlar için) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding-top: 20px; /* Navbar varsa boşluk bırakın */
-            font-family: 'Poppins', sans-serif;
-        }
-        .container {
-            max-width: 800px;
-        }
-        .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .profile-pic {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #005792;
-            margin-bottom: 15px;
-        }
-        .form-label {
-            font-weight: 500;
-        }
-        .btn-primary {
-            background-color: #005792;
-            border-color: #005792;
-        }
-        .btn-primary:hover {
-            background-color: #003d66;
-            border-color: #003d66;
-        }
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-            border-color: #bd2130;
-        }
-        /* Mesaj kutusu */
-        #userSettingsMessage {
-            display: none;
-            margin-top: 15px;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kullanıcı Paneli - Başiskele Kariyer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="css/basiskele-theme.css">
+  <style>
+    body { padding-top: 150px; }
+    .dashboard-shell {
+      width: min(1120px, calc(100% - 28px));
+      margin: 0 auto 48px;
+    }
+    .dashboard-hero,
+    .dashboard-card {
+      border: 1px solid var(--bk-border);
+      border-radius: var(--bk-radius);
+      background: rgba(255, 255, 255, .92);
+      box-shadow: var(--bk-shadow);
+    }
+    .dashboard-hero {
+      padding: 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .dashboard-hero h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, .9fr);
+      gap: 18px;
+    }
+    .dashboard-card {
+      padding: 20px;
+    }
+    .profile-pic {
+      width: 124px;
+      height: 124px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 14px 32px rgba(15, 43, 71, .14);
+    }
+    #userSettingsMessage {
+      display: none;
+    }
+    @media (max-width: 880px) {
+      .dashboard-hero,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      body { padding-top: 120px; }
+    }
+  </style>
 </head>
-<body>
-    <div class="container py-4">
-        <h2 class="mb-4 text-center">Hesap Ayarları</h2>
-        <div id="userSettingsMessage" class="alert" role="alert"></div>
+<body class="bk-page">
+  <main class="dashboard-shell">
+    <section class="dashboard-hero">
+      <div>
+        <p class="bk-eyebrow">Kullanıcı paneli</p>
+        <h1>Profilini ve ilanlarını buradan yönet.</h1>
+        <p class="bk-muted mb-0">Bilgilerini güncelle, şifreni değiştir, ilanlarına ve mesajlarına hızlıca ulaş.</p>
+      </div>
+      <div class="d-flex flex-wrap gap-2">
+        <a href="ilanlar.html" class="btn btn-primary"><i class="fas fa-plus-circle me-2"></i>İlan Ekle</a>
+        <a href="mesajlar.html" class="btn btn-light"><i class="fas fa-comments me-2"></i>Mesajlar</a>
+      </div>
+    </section>
 
-        <div class="card p-4">
-            <h4 class="card-title text-center mb-4">Profil Bilgileri</h4>
-            <form id="userProfileForm">
-                <div class="text-center mb-4">
-                    <img id="profilePicPreview" src="https://via.placeholder.com/120?text=Profil" alt="Profil Fotoğrafı" class="profile-pic">
-                    <input type="file" id="profilePicUpload" class="form-control mt-2">
-                </div>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label for="profileName" class="form-label">Adınız</label>
-                        <input type="text" class="form-control" id="profileName" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="profileSurname" class="form-label">Soyadınız</label>
-                        <input type="text" class="form-control" id="profileSurname" required>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="profileEmail" class="form-label">E-posta Adresi (Değiştirilemez)</label>
-                    <input type="email" class="form-control" id="profileEmail" readonly>
-                </div>
-                <div class="mb-3">
-                    <label for="profilePhone" class="form-label">Telefon Numarası</label>
-                    <input type="tel" class="form-control" id="profilePhone">
-                </div>
-                <div class="mb-3">
-                    <label for="profileAddress" class="form-label">Adres (İlçe/Şehir)</label>
-                    <input type="text" class="form-control" id="profileAddress">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Bilgileri Kaydet</button>
-            </form>
+    <div id="userSettingsMessage" class="alert" role="alert"></div>
+
+    <section class="dashboard-grid">
+      <div class="dashboard-card">
+        <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+          <div>
+            <p class="bk-eyebrow">Profil</p>
+            <h2 class="h4 mb-0">Kişisel bilgiler</h2>
+          </div>
+          <img id="profilePicPreview" src="https://via.placeholder.com/124?text=Profil" alt="Profil fotoğrafı" class="profile-pic">
         </div>
 
-        <div class="card p-4">
-            <h4 class="card-title text-center mb-4">Şifre Değiştir</h4>
-            <form id="changePasswordForm">
-                <div class="mb-3">
-                    <label for="currentPassword" class="form-label">Mevcut Şifre</label>
-                    <input type="password" class="form-control" id="currentPassword" required>
-                </div>
-                <div class="mb-3">
-                    <label for="newPassword" class="form-label">Yeni Şifre</label>
-                    <input type="password" class="form-control" id="newPassword" required>
-                </div>
-                <div class="mb-3">
-                    <label for="newPasswordConfirm" class="form-label">Yeni Şifre Tekrar</label>
-                    <input type="password" class="form-control" id="newPasswordConfirm" required>
-                </div>
-                <button type="submit" class="btn btn-warning w-100">Şifreyi Değiştir</button>
-            </form>
+        <form id="userProfileForm">
+          <div class="mb-3">
+            <label for="profilePicUpload" class="form-label">Profil Fotoğrafı</label>
+            <input type="file" id="profilePicUpload" class="form-control" accept="image/*">
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="profileName" class="form-label">Ad</label>
+              <input type="text" class="form-control" id="profileName" required>
+            </div>
+            <div class="col-md-6">
+              <label for="profileSurname" class="form-label">Soyad</label>
+              <input type="text" class="form-control" id="profileSurname" required>
+            </div>
+            <div class="col-md-6">
+              <label for="profileEmail" class="form-label">E-posta</label>
+              <input type="email" class="form-control" id="profileEmail" readonly>
+            </div>
+            <div class="col-md-6">
+              <label for="profilePhone" class="form-label">Telefon</label>
+              <input type="tel" class="form-control" id="profilePhone">
+            </div>
+            <div class="col-12">
+              <label for="profileAddress" class="form-label">Adres / İlçe</label>
+              <input type="text" class="form-control" id="profileAddress">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-4">
+            <i class="fas fa-save me-2"></i>Bilgileri Kaydet
+          </button>
+        </form>
+      </div>
+
+      <div class="d-grid gap-3">
+        <div class="dashboard-card">
+          <p class="bk-eyebrow">Güvenlik</p>
+          <h2 class="h4">Şifre değiştir</h2>
+          <form id="changePasswordForm">
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label">Mevcut Şifre</label>
+              <input type="password" class="form-control" id="currentPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPassword" class="form-label">Yeni Şifre</label>
+              <input type="password" class="form-control" id="newPassword" required>
+            </div>
+            <div class="mb-3">
+              <label for="newPasswordConfirm" class="form-label">Yeni Şifre Tekrar</label>
+              <input type="password" class="form-control" id="newPasswordConfirm" required>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Şifreyi Değiştir</button>
+          </form>
         </div>
 
-        <div class="card p-4 text-center">
-            <h4 class="card-title mb-4">Hesabı Sil</h4>
-            <p class="text-muted">Hesabınızı silmek, tüm verilerinizin kalıcı olarak silinmesine neden olacaktır.</p>
-            <button class="btn btn-danger w-50 mx-auto" id="deleteAccountBtn">Hesabı Sil</button>
+        <div class="dashboard-card" id="basvurular">
+          <p class="bk-eyebrow">Hızlı erişim</p>
+          <div class="d-grid gap-2">
+            <a href="ilanlar.html" class="btn btn-light text-start"><i class="fas fa-briefcase me-2"></i>İlanları Gör</a>
+            <a href="mesajlar.html" class="btn btn-light text-start"><i class="fas fa-envelope me-2"></i>Mesaj Kutusu</a>
+            <button id="logoutBtn" class="btn btn-outline-secondary text-start"><i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap</button>
+          </div>
         </div>
 
-        <div class="text-center mt-4">
-            <button class="btn btn-secondary" id="logoutBtn">Çıkış Yap</button>
+        <div class="dashboard-card border-danger">
+          <p class="bk-eyebrow text-danger">Tehlikeli alan</p>
+          <p class="bk-muted">Hesabını silersen profil kaydın ve oturumun kalıcı olarak kapanır.</p>
+          <button class="btn btn-danger w-100" id="deleteAccountBtn">Hesabı Sil</button>
         </div>
+      </div>
+    </section>
+  </main>
 
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- user_dashboard_app.js dosyasını bir ES modülü olarak bağlayın -->
-    <script type="module" src="user_dashboard_app.js"></script>
-    <script src="js/basiskele-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="pages/user_dashboard_app.js"></script>
+  <script src="js/basiskele-ui.js"></script>
+  <script src="js/nav.js"></script>
 </body>
 </html>

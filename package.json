@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "dev": "npx firebase-tools emulators:start --only hosting",
+    "serve": "npx firebase-tools emulators:start --only hosting",
+    "deploy": "npx firebase-tools deploy",
+    "deploy:functions": "npx firebase-tools deploy --only functions",
+    "deploy:rules": "npx firebase-tools deploy --only firestore:rules"
+  },
   "dependencies": {
     "firebase": "^12.0.0"
   }
