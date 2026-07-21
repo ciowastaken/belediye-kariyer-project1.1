@@ -11,7 +11,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="css/basiskele-theme.css">
   <style>
-    body { padding-top: 150px; }
     .dashboard-shell {
       width: min(1120px, calc(100% - 28px));
       margin: 0 auto 48px;
@@ -56,12 +55,58 @@
     #userSettingsMessage {
       display: none;
     }
+    .dashboard-checklist {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .dashboard-check {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 13px;
+      border: 1px solid rgba(6, 75, 115, .12);
+      border-radius: 8px;
+      background: #f8fbfe;
+    }
+    .dashboard-check__icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: rgba(0, 107, 159, .1);
+      color: var(--bk-primary-dark);
+      font-size: 1rem;
+    }
+    .dashboard-check strong,
+    .dashboard-check small {
+      display: block;
+    }
+    .dashboard-check strong {
+      color: var(--bk-text);
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .dashboard-check small {
+      margin-top: 4px;
+      color: #475569;
+      line-height: 1.45;
+    }
+    .dashboard-status-note {
+      padding: 14px;
+      border-radius: 8px;
+      background: rgba(20, 152, 95, .09);
+      color: #166534;
+      font-weight: 700;
+      line-height: 1.45;
+    }
     @media (max-width: 880px) {
       .dashboard-hero,
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
-      body { padding-top: 120px; }
     }
   </style>
 </head>
@@ -71,7 +116,7 @@
       <div>
         <p class="bk-eyebrow">Kullanıcı paneli</p>
         <h1>Profilini ve ilanlarını buradan yönet.</h1>
-        <p class="bk-muted mb-0">Bilgilerini güncelle, şifreni değiştir, ilanlarına ve mesajlarına hızlıca ulaş.</p>
+        <p class="bk-muted mb-0">Bilgilerini güncelle, şifreni değiştir ve başvuru sürecini düzenli takip et.</p>
       </div>
       <div class="d-flex flex-wrap gap-2">
         <a href="ilanlar.html" class="btn btn-primary"><i class="fas fa-plus-circle me-2"></i>İlan Ekle</a>
@@ -146,12 +191,36 @@
         </div>
 
         <div class="dashboard-card" id="basvurular">
-          <p class="bk-eyebrow">Hızlı erişim</p>
-          <div class="d-grid gap-2">
-            <a href="ilanlar.html" class="btn btn-light text-start"><i class="fas fa-briefcase me-2"></i>İlanları Gör</a>
-            <a href="mesajlar.html" class="btn btn-light text-start"><i class="fas fa-envelope me-2"></i>Mesaj Kutusu</a>
-            <button id="logoutBtn" class="btn btn-outline-secondary text-start"><i class="fas fa-sign-out-alt me-2"></i>Çıkış Yap</button>
+          <p class="bk-eyebrow">Başvuru hazırlığı</p>
+          <h2 class="h5 mb-2">Panel durumun</h2>
+          <p class="bk-muted mb-0">Profilini güncel tutman başvuruların ve mesajlaşmaların daha düzenli ilerlemesini sağlar.</p>
+          <div class="dashboard-checklist">
+            <div class="dashboard-check">
+              <span class="dashboard-check__icon"><i class="fas fa-user-check"></i></span>
+              <div>
+                <strong>Profil bilgileri</strong>
+                <small>Ad, telefon ve adres bilgilerini eksiksiz tut.</small>
+              </div>
+            </div>
+            <div class="dashboard-check">
+              <span class="dashboard-check__icon"><i class="fas fa-envelope-open-text"></i></span>
+              <div>
+                <strong>Mesaj takibi</strong>
+                <small>Gelen cevapları kaçırmamak için mesaj kutunu düzenli kontrol et.</small>
+              </div>
+            </div>
+            <div class="dashboard-check">
+              <span class="dashboard-check__icon"><i class="fas fa-clipboard-check"></i></span>
+              <div>
+                <strong>Başvuru düzeni</strong>
+                <small>İlgilendiğin ilanları inceleyip bilgilerini güncelledikten sonra başvur.</small>
+              </div>
+            </div>
           </div>
+          <div class="dashboard-status-note mb-3">
+            <i class="fas fa-shield-alt me-2"></i>Hesap işlemlerini bu panelden güvenli şekilde yönetebilirsin.
+          </div>
+          <button id="logoutBtn" class="btn btn-outline-secondary w-100 text-start"><i class="fas fa-sign-out-alt me-2"></i>Güvenli Çıkış Yap</button>
         </div>
 
         <div class="dashboard-card border-danger">
