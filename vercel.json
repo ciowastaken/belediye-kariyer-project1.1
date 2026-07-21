@@ -1,0 +1,54 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/anasayfa.html"
+    },
+    {
+      "source": "/admin_panel",
+      "destination": "/admin_panel.html"
+    },
+    {
+      "source": "/anasayfa",
+      "destination": "/anasayfa.html"
+    },
+    {
+      "source": "/ilanlar",
+      "destination": "/ilanlar.html"
+    },
+    {
+      "source": "/iletisim",
+      "destination": "/iletisim.html"
+    },
+    {
+      "source": "/index",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/mesajlar",
+      "destination": "/mesajlar.html"
+    },
+    {
+      "source": "/settings",
+      "destination": "/settings.html"
+    },
+    {
+      "source": "/user_dashboard",
+      "destination": "/user_dashboard.html"
+    },
+    {
+      "source": "/:path((?!.*\\.).*)",
+      "destination": "/anasayfa.html"
+    }
+  ]
+}
