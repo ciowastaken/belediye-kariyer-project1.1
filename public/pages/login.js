@@ -15,6 +15,18 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
+const LOGIN_PAGES = new Set(['', 'index', 'index.html', 'login', 'login.html']);
+
+function getCurrentPageName() {
+  return (window.location.pathname.split('/').filter(Boolean).pop() || '').toLowerCase();
+}
+
+function withTimeout(promise, timeoutMs, fallbackValue) {
+  return Promise.race([
+    promise,
+    new Promise(resolve => setTimeout(() => resolve(fallbackValue), timeoutMs))
+  ]);
+}
 
 // Ekran mesajlarını gösterir
 function showMessage(message, type = 'info') {
@@ -78,18 +90,21 @@ async function isAdminUser(user) {
   }
 }
 
+async function getSignedInRedirectTarget(user) {
+  const adminMi = await withTimeout(isAdminUser(user), 5000, false);
+  return adminMi ? 'admin_panel.html' : 'anasayfa.html';
+}
+
+async function redirectSignedInUser(user) {
+  window.location.replace(await getSignedInRedirectTarget(user));
+}
+
 // 2) Oturum durumu değiştiğinde uygun sayfaya yönlendir
 auth.onAuthStateChanged(async user => {
   if (!user) return;
 
-  const page = window.location.pathname.split('/').pop();
-
-  if (['', 'index.html', 'login.html'].includes(page)) {
-    if (await isAdminUser(user)) {
-      window.location = 'admin_panel.html';
-    } else {
-      window.location = 'anasayfa.html';
-    }
+  if (LOGIN_PAGES.has(getCurrentPageName())) {
+    await redirectSignedInUser(user);
   }
 });
 
@@ -134,7 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       setButtonLoading(button, true, 'Giriş yapılıyor...');
-      await auth.signInWithEmailAndPassword(email, pass);
+      const credential = await auth.signInWithEmailAndPassword(email, pass);
+      await redirectSignedInUser(credential.user);
     } catch {
       setButtonLoading(button, false);
       showMessage('Giriş başarısız: E-posta veya şifre hatalı.', 'danger');
@@ -151,7 +167,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       setButtonLoading(button, true, 'Kontrol ediliyor...');
-      await auth.signInWithEmailAndPassword(email, pass);
+      const credential = await auth.signInWithEmailAndPassword(email, pass);
+      const adminMi = await withTimeout(isAdminUser(credential.user), 5000, false);
+
+      if (!adminMi) {
+        await auth.signOut();
+        setButtonLoading(button, false);
+        showMessage('Bu hesap yetkili değil. Normal girişten devam edin.', 'danger');
+        return;
+      }
+
+      window.location.replace('admin_panel.html');
     } catch {
       setButtonLoading(button, false);
       showMessage('Yetkili girişi başarısız: Bilgileri kontrol edin.', 'danger');
