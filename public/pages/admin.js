@@ -613,13 +613,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('adminLogoutBtn')?.addEventListener('click', async () => {
       await auth.signOut();
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
     });
   }
 
   auth.onAuthStateChanged(async (user) => {
     if (!user) {
-      window.location.href = 'index.html';
+      window.location.href = 'login.html';
       return;
     }
 
@@ -630,7 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isAdminLike(userData)) {
         showAlert('Bu sayfaya erişim yetkin yok.', 'danger');
         await auth.signOut();
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
         return;
       }
 

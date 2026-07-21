@@ -162,7 +162,7 @@ async function handleDeleteAccount() {
         // Sonra Auth kullanıcısını sil
         await deleteUser(user);
         alert('Hesabınız başarıyla silindi.');
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     } catch (error) {
         console.error("Hesap silme hatası:", error);
         showMessage('Hesap silinirken bir hata oluştu. Lütfen tekrar giriş yapıp deneyin.', 'danger');
@@ -173,7 +173,7 @@ async function handleDeleteAccount() {
 async function handleLogout() {
     try {
         await signOut(auth);
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     } catch (error) {
         console.error("Çıkış hatası:", error);
     }
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
             // Kullanıcı giriş yapmamış, login sayfasına yönlendir
-            window.location.href = 'index.html';
+            window.location.href = 'login.html';
         }
     });
 });

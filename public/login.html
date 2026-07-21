@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Seçimi | Başiskele Belediyesi</title>
+    <title>Giriş / Üyelik | Başiskele Belediyesi Kariyer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/basiskele-theme.css">
     <style>
@@ -23,8 +23,9 @@
 
         body {
             min-height: 100vh;
+            min-height: 100dvh;
             margin: 0;
-            padding: 24px;
+            padding: clamp(16px, 3vw, 34px);
             font-family: Arial, Helvetica, sans-serif;
             color: var(--text-main);
             overflow-x: hidden;
@@ -75,6 +76,7 @@
             grid-template-columns: 1.1fr 0.9fr;
             gap: 28px;
             align-items: center;
+            margin: auto;
         }
 
         .intro-panel {
@@ -233,11 +235,74 @@
             letter-spacing: -0.6px;
         }
 
+        .login-card-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .login-card-brand img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: inset 0 0 0 1px rgba(0, 87, 146, 0.1);
+        }
+
+        .login-card-brand span {
+            display: block;
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .login-card-brand strong {
+            display: block;
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+
         .login-subtitle {
             margin-bottom: 26px;
             text-align: center;
             color: var(--text-muted);
             font-size: 0.95rem;
+        }
+
+        .login-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .login-highlight {
+            min-height: 68px;
+            padding: 10px 8px;
+            border: 1px solid rgba(0, 87, 146, 0.1);
+            border-radius: 16px;
+            background: rgba(234, 245, 255, 0.72);
+            text-align: center;
+        }
+
+        .login-highlight strong {
+            display: block;
+            color: var(--primary);
+            font-size: 0.88rem;
+        }
+
+        .login-highlight span {
+            display: block;
+            margin-top: 4px;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            line-height: 1.25;
         }
 
         .form-label {
@@ -428,6 +493,7 @@
             .login-page {
                 grid-template-columns: 1fr;
                 max-width: 520px;
+                gap: 16px;
             }
 
             .intro-panel {
@@ -442,17 +508,21 @@
 
         @media (max-width: 520px) {
             body {
-                padding: 14px;
+                padding: 12px;
             }
 
             .login-card,
             .intro-panel {
                 border-radius: 24px;
-                padding: 24px;
+                padding: 22px;
             }
 
             .intro-panel h1 {
                 font-size: 2rem;
+            }
+
+            .login-highlights {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -488,6 +558,14 @@
             <div id="generalErrorMessage" class="general-message"></div>
 
             <div class="login-card">
+                <div class="login-card-brand" aria-label="Başiskele Belediyesi Kariyer Platformu">
+                    <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo">
+                    <div>
+                        <span>Başiskele Belediyesi</span>
+                        <strong>Kariyer Platformu</strong>
+                    </div>
+                </div>
+
                 <h2>Giriş Yap</h2>
                 <p class="login-subtitle">Hesabınıza giriş yaparak kariyer işlemlerinize devam edin.</p>
 
@@ -529,6 +607,21 @@
                 </div>
 
                 <p class="security-note">Bilgileriniz Firebase Authentication ile doğrulanır.</p>
+
+                <div class="login-highlights" aria-label="Platform özellikleri">
+                    <div class="login-highlight">
+                        <strong>İlanlar</strong>
+                        <span>Aktif fırsatları görüntüle</span>
+                    </div>
+                    <div class="login-highlight">
+                        <strong>Başvuru</strong>
+                        <span>Süreci panelden takip et</span>
+                    </div>
+                    <div class="login-highlight">
+                        <strong>Mesaj</strong>
+                        <span>Yetkililerle iletişimde kal</span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -620,7 +713,5 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="pages/login.js"></script>
-    <script src="js/basiskele-ui.js"></script>
-    <script src="js/nav.js"></script>
 </body>
 </html>

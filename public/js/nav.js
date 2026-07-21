@@ -206,7 +206,6 @@
       .bk-profile__button,
       .bk-notification,
       .bk-back-button,
-      .bk-login-button,
       .bk-menu-toggle {
         border: 0;
         color: var(--bk-primary);
@@ -216,8 +215,7 @@
       }
 
       .bk-profile__button,
-      .bk-back-button,
-      .bk-login-button {
+      .bk-back-button {
         min-height: 48px;
         padding: 0 14px;
         display: inline-flex;
@@ -228,18 +226,6 @@
         font-size: 15px;
         font-weight: 800;
         transition: background .22s ease, transform .22s ease;
-      }
-
-      .bk-login-button {
-        background: var(--bk-primary);
-        color: #fff !important;
-        text-decoration: none !important;
-        box-shadow: 0 10px 22px rgba(0, 87, 146, .18);
-      }
-
-      .bk-login-button:hover {
-        background: var(--bk-primary-dark);
-        color: #fff !important;
       }
 
       .bk-profile__button:hover,
@@ -414,8 +400,7 @@
       }
 
       .bk-actions.is-guest .bk-profile,
-      .bk-actions.is-guest .bk-notification-wrap,
-      .bk-actions.is-user .bk-login-button {
+      .bk-actions.is-guest .bk-notification-wrap {
         display: none !important;
       }
 
@@ -471,11 +456,9 @@
         .bk-brand__text span { display: none; }
         .bk-brand__text strong { font-size: 15px; }
         .bk-back-button span,
-        .bk-profile__button span,
-        .bk-login-button span { display: none; }
+        .bk-profile__button span { display: none; }
         .bk-back-button,
-        .bk-profile__button,
-        .bk-login-button { width: 44px; justify-content: center; padding: 0; }
+        .bk-profile__button { width: 44px; justify-content: center; padding: 0; }
         .bk-notification { width: 44px; height: 44px; border-radius: 8px; }
         .bk-menu-toggle { width: 44px; height: 44px; }
       }
@@ -520,10 +503,6 @@
               <button type="button" data-nav-logout id="nav-logout-btn" role="menuitem"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
             </div>
           </div>
-
-          <a class="bk-login-button" href="login.html">
-            <i class="fas fa-sign-in-alt" aria-hidden="true"></i><span>Giriş</span>
-          </a>
 
           <div class="bk-notification-wrap">
             <button class="bk-notification" id="notificationButton" type="button" aria-label="Bildirimler" aria-expanded="false" aria-haspopup="true">
