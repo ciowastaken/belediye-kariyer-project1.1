@@ -43,6 +43,45 @@ body.bk-modern {
   text-transform: uppercase;
 }
 
+.jobs-hero__panel,
+.card,
+.bk-panel,
+.dashboard-card,
+.settings-card,
+.jobs-toolbar,
+#new-listing-form {
+  color: var(--bk-text);
+}
+
+.jobs-hero__panel .bk-eyebrow,
+.card .bk-eyebrow,
+.bk-panel .bk-eyebrow,
+.dashboard-card .bk-eyebrow,
+.settings-card .bk-eyebrow,
+.jobs-toolbar .bk-eyebrow,
+#new-listing-form .bk-eyebrow {
+  color: var(--bk-primary-dark) !important;
+}
+
+.jobs-hero__panel .text-muted,
+.jobs-hero__panel .bk-muted,
+.card .text-muted,
+.bk-panel .text-muted,
+.dashboard-card .text-muted,
+.settings-card .text-muted {
+  color: #475569 !important;
+}
+
+.jobs-hero__panel .jobs-hero__stat {
+  border-color: rgba(6, 75, 115, .12) !important;
+  background: #fff !important;
+  color: var(--bk-text) !important;
+}
+
+.jobs-hero__panel .jobs-hero__stat small {
+  color: #334155 !important;
+}
+
 .btn {
   border-radius: var(--bk-radius);
   font-weight: 700;
