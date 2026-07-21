@@ -36,6 +36,28 @@ function showMessage(message, type = 'info') {
 // --- ANA FONKSİYONLAR ---
 let currentUserData = null;
 let listenersBound = false;
+let previewObjectUrl = null;
+
+function setProfilePhotoPreview(photoURL) {
+    const preview = document.getElementById('profilePicPreview');
+    const frame = document.getElementById('profilePhotoFrame');
+    if (!preview) return;
+
+    if (photoURL) {
+        preview.src = photoURL;
+        frame?.classList.add('has-photo');
+    } else {
+        preview.removeAttribute('src');
+        frame?.classList.remove('has-photo');
+    }
+}
+
+function setProfilePhotoFileName(text = 'Henüz fotoğraf seçilmedi') {
+    const fileNameElement = document.getElementById('profilePicFileName');
+    if (fileNameElement) {
+        fileNameElement.textContent = text;
+    }
+}
 
 // Kullanıcı bilgilerini Firestore'dan çekip formu doldurur
 async function loadUserProfile(user) {
@@ -49,11 +71,14 @@ async function loadUserProfile(user) {
             document.getElementById('profileEmail').value = user.email; // Auth'dan gelen email daha güvenilir
             document.getElementById('profilePhone').value = currentUserData.phone || '';
             document.getElementById('profileAddress').value = currentUserData.address || '';
-            document.getElementById('profilePicPreview').src = currentUserData.photoURL || 'https://via.placeholder.com/120?text=Profil';
+            setProfilePhotoPreview(currentUserData.photoURL || '');
+            setProfilePhotoFileName(currentUserData.photoURL ? 'Kayıtlı fotoğraf kullanılıyor' : undefined);
         } else {
             // Firestore'da belge yoksa, temel bir belge oluştur
             await setDoc(userDocRef, { email: user.email, kayit_tarihi: serverTimestamp() }, { merge: true });
             document.getElementById('profileEmail').value = user.email;
+            setProfilePhotoPreview('');
+            setProfilePhotoFileName();
         }
     } catch (error) {
         console.error("Profil yüklenirken hata:", error);
@@ -83,7 +108,8 @@ async function handleProfileUpdate(e) {
             await uploadBytes(photoRef, photoFile);
             photoURL = await getDownloadURL(photoRef);
             updateData.photoURL = photoURL;
-            document.getElementById('profilePicPreview').src = photoURL;
+            setProfilePhotoPreview(photoURL);
+            setProfilePhotoFileName('Kayıtlı fotoğraf güncellendi');
         }
 
         await updateDoc(doc(db, 'users', user.uid), updateData);
@@ -158,8 +184,25 @@ async function handleLogout() {
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('profilePicUpload')?.addEventListener('change', (event) => {
         const file = event.target.files?.[0];
-        if (!file) return;
-        document.getElementById('profilePicPreview').src = URL.createObjectURL(file);
+        if (!file) {
+            setProfilePhotoFileName();
+            return;
+        }
+
+        if (!file.type.startsWith('image/')) {
+            event.target.value = '';
+            setProfilePhotoFileName();
+            showMessage('Lütfen geçerli bir görsel dosyası seç.', 'warning');
+            return;
+        }
+
+        if (previewObjectUrl) {
+            URL.revokeObjectURL(previewObjectUrl);
+        }
+
+        previewObjectUrl = URL.createObjectURL(file);
+        setProfilePhotoPreview(previewObjectUrl);
+        setProfilePhotoFileName(`${file.name} seçildi`);
     });
 
     onAuthStateChanged(auth, (user) => {
