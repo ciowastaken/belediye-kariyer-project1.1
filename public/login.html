@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/basiskele-theme.css">
     <style>
         :root {
-            --primary: #005792;
-            --primary-dark: #003d66;
+            --primary: #00a5c2;
+            --primary-dark: #00788d;
             --accent: #16a34a;
             --soft-bg: #eef6fb;
             --text-main: #102033;
@@ -31,7 +31,7 @@
             overflow-x: hidden;
             background:
                 radial-gradient(circle at 15% 15%, rgba(22, 163, 74, 0.22), transparent 28%),
-                radial-gradient(circle at 85% 20%, rgba(0, 87, 146, 0.24), transparent 32%),
+                radial-gradient(circle at 85% 20%, rgba(0, 165, 194, 0.24), transparent 32%),
                 linear-gradient(135deg, #e7f2fb 0%, #f7fafc 52%, #e8fff2 100%);
             display: flex;
             align-items: center;
@@ -54,7 +54,7 @@
         body::before {
             left: -120px;
             bottom: -130px;
-            background: rgba(0, 87, 146, 0.18);
+            background: rgba(0, 165, 194, 0.18);
         }
 
         body::after {
@@ -87,9 +87,9 @@
             position: relative;
             overflow: hidden;
             background:
-                linear-gradient(135deg, rgba(0, 61, 102, 0.96), rgba(0, 87, 146, 0.88)),
+                linear-gradient(135deg, rgba(0, 120, 141, 0.96), rgba(0, 165, 194, 0.88)),
                 url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80") center/cover;
-            box-shadow: 0 28px 80px rgba(0, 61, 102, 0.25);
+            box-shadow: 0 28px 80px rgba(0, 120, 141, 0.25);
             animation: slideInLeft 0.85s ease both;
         }
 
@@ -249,7 +249,7 @@
             object-fit: contain;
             border-radius: 14px;
             background: #fff;
-            box-shadow: inset 0 0 0 1px rgba(0, 87, 146, 0.1);
+            box-shadow: inset 0 0 0 1px rgba(0, 165, 194, 0.1);
         }
 
         .login-card-brand span {
@@ -285,7 +285,7 @@
         .login-highlight {
             min-height: 68px;
             padding: 10px 8px;
-            border: 1px solid rgba(0, 87, 146, 0.1);
+            border: 1px solid rgba(0, 165, 194, 0.1);
             border-radius: 16px;
             background: rgba(234, 245, 255, 0.72);
             text-align: center;
@@ -335,7 +335,7 @@
 
         .form-control:focus {
             border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 87, 146, 0.12);
+            box-shadow: 0 0 0 4px rgba(0, 165, 194, 0.12);
         }
 
         .password-wrap {
@@ -360,7 +360,7 @@
         }
 
         .password-toggle:hover {
-            background: rgba(0, 87, 146, 0.08);
+            background: rgba(0, 165, 194, 0.08);
             color: var(--primary);
         }
 
@@ -379,12 +379,12 @@
         .btn-custom {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             border-color: transparent;
-            box-shadow: 0 14px 26px rgba(0, 87, 146, 0.22);
+            box-shadow: 0 14px 26px rgba(0, 165, 194, 0.22);
         }
 
         .btn-custom:hover,
         .btn-custom:focus {
-            background: linear-gradient(135deg, #0068ad, var(--primary-dark));
+            background: linear-gradient(135deg, #0093ad, var(--primary-dark));
             border-color: transparent;
         }
 
@@ -559,7 +559,7 @@
 
             <div class="login-card">
                 <div class="login-card-brand" aria-label="Başiskele Belediyesi Kariyer Platformu">
-                    <img src="https://www.upload.ee/image/19288734/logo_07042021153953.png" alt="Başiskele Belediyesi Logo">
+                    <img src="assets/brand/basiskele-belediyesi-logo.svg" alt="Başiskele Belediyesi Logo">
                     <div>
                         <span>Başiskele Belediyesi</span>
                         <strong>Kariyer Platformu</strong>

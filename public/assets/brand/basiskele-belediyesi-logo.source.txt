@@ -1,0 +1,17 @@
+Basiskele Belediyesi logo asset source
+
+Local file:
+assets/brand/basiskele-belediyesi-logo.svg
+
+Downloaded from Wikimedia Commons SVG mirror:
+https://upload.wikimedia.org/wikipedia/commons/3/3f/Ba%C5%9Fiskele_Belediyesi_logo.svg
+
+The Commons file lists the official Basiskele Belediyesi document page as its source:
+https://www.basiskele.bel.tr/dokuman-d/3/103/guzel-isler
+
+Official municipal PDF found during verification:
+https://www.basiskele.bel.tr/upload/tr/dosya/dokumanyonetimi/103/BasiskeleBelediyesi_logo_26062020140412-2.pdf
+
+Brand colors observed in the SVG:
+primary turquoise: #00a5c2
+neutral gray: #a4a1a3

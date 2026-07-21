@@ -1,5 +1,5 @@
 (() => {
-  const logoUrl = 'https://www.upload.ee/image/19288734/logo_07042021153953.png';
+  const logoUrl = 'assets/brand/basiskele-belediyesi-logo.svg';
 
   document.querySelectorAll('img[alt*="Başiskele"], img[alt*="Belediyesi"]').forEach((image) => {
     if (!image.getAttribute('src')) image.setAttribute('src', logoUrl);

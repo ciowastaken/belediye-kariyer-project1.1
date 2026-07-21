@@ -1,7 +1,7 @@
 (() => {
   const STYLE_ID = 'basiskele-shared-navbar-style';
   const FA_ID = 'basiskele-fontawesome';
-  const LOGO_URL = 'https://www.upload.ee/image/19288734/logo_07042021153953.png';
+  const LOGO_URL = 'assets/brand/basiskele-belediyesi-logo.svg';
 
   const navItems = [
     { href: 'anasayfa.html', label: 'Anasayfa', icon: 'fas fa-home', files: ['', 'index.html', 'anasayfa.html'] },
@@ -55,13 +55,13 @@
     style.id = STYLE_ID;
     style.textContent = `
       :root {
-        --bk-primary: #005792;
-        --bk-primary-dark: #003d66;
-        --bk-primary-light: #eaf5ff;
+        --bk-primary: #00a5c2;
+        --bk-primary-dark: #00788d;
+        --bk-primary-light: #e8fbff;
         --bk-text: #0b3557;
         --bk-muted: #5f6f89;
-        --bk-border: rgba(0, 87, 146, .12);
-        --bk-shadow: 0 22px 55px rgba(7, 37, 62, .12);
+        --bk-border: rgba(0, 165, 194, .14);
+        --bk-shadow: 0 22px 55px rgba(0, 71, 85, .12);
       }
 
       html { scroll-padding-top: 24px; }
@@ -116,7 +116,7 @@
         place-items: center;
         border-radius: 8px;
         background: #fff;
-        box-shadow: inset 0 0 0 1px rgba(0, 87, 146, .08), 0 12px 28px rgba(0, 87, 146, .08);
+        box-shadow: inset 0 0 0 1px rgba(0, 165, 194, .1), 0 12px 28px rgba(0, 165, 194, .1);
         overflow: hidden;
       }
 
@@ -176,7 +176,7 @@
 
       .bk-link:hover {
         color: var(--bk-primary-dark) !important;
-        background: rgba(0, 87, 146, .08);
+        background: rgba(0, 165, 194, .09);
         transform: translateY(-2px);
       }
 
@@ -184,7 +184,7 @@
       .bk-link.active {
         color: #fff !important;
         background: var(--bk-primary) !important;
-        box-shadow: 0 10px 22px rgba(0, 87, 146, .2);
+        box-shadow: 0 10px 22px rgba(0, 165, 194, .2);
       }
 
       .bk-actions {
@@ -231,7 +231,7 @@
       .bk-profile__button:hover,
       .bk-back-button:hover,
       .bk-profile.is-open .bk-profile__button {
-        background: rgba(0, 87, 146, .08);
+        background: rgba(0, 165, 194, .08);
         transform: translateY(-2px);
       }
 
@@ -277,7 +277,7 @@
 
       .bk-profile__menu a:hover,
       .bk-profile__menu button:hover {
-        background: rgba(0, 87, 146, .08);
+        background: rgba(0, 165, 194, .08);
         color: var(--bk-primary);
       }
 
@@ -288,7 +288,7 @@
         display: grid;
         place-items: center;
         border-radius: 8px;
-        border: 1px solid rgba(0, 87, 146, .12);
+        border: 1px solid rgba(0, 165, 194, .12);
         background: rgba(234, 245, 255, .9);
         font-size: 18px;
         transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
@@ -297,7 +297,7 @@
       .bk-notification:hover {
         transform: translateY(-2px);
         background: #fff;
-        box-shadow: 0 14px 26px rgba(0, 87, 146, .14);
+        box-shadow: 0 14px 26px rgba(0, 165, 194, .14);
       }
 
       .bk-notification__badge {
@@ -395,7 +395,7 @@
         display: none;
         place-items: center;
         border-radius: 8px;
-        background: rgba(0, 87, 146, .08);
+        background: rgba(0, 165, 194, .08);
         font-size: 20px;
       }
 
