@@ -102,12 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function isAdminLike(data = {}) {
-    const role = data.role || (data.isAdmin ? 'admin' : 'user');
-    return role === 'admin' || role === 'yetkili' || data.isAdmin === true;
+    const role = typeof data.role === 'string' ? data.role.trim().toLowerCase() : '';
+    if (role) return role === 'admin' || role === 'yetkili';
+    return data.isAdmin === true;
   }
 
   function getRole(data = {}) {
-    if (data.role) return data.role;
+    if (typeof data.role === 'string' && data.role.trim()) return data.role.trim().toLowerCase();
     return data.isAdmin ? 'admin' : 'user';
   }
 

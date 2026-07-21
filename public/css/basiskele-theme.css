@@ -296,6 +296,8 @@ body.bk-modern {
 
 .bk-admin-sidebar-footer {
   margin-top: auto;
+  display: grid;
+  gap: 10px;
 }
 
 .bk-admin-main {
@@ -673,7 +675,7 @@ body.bk-modern {
 
   .bk-admin-sidebar-footer {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 

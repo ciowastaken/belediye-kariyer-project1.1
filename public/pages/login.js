@@ -84,7 +84,9 @@ async function isAdminUser(user) {
     const snap = await db.collection('users').doc(user.uid).get();
     if (!snap.exists) return false;
     const data = snap.data() || {};
-    return data.isAdmin === true || data.role === 'admin' || data.role === 'yetkili';
+    const role = typeof data.role === 'string' ? data.role.trim().toLowerCase() : '';
+    if (role) return role === 'admin' || role === 'yetkili';
+    return data.isAdmin === true;
   } catch {
     return false;
   }

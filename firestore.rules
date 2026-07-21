@@ -20,7 +20,10 @@ service cloud.firestore {
 
     function isAdmin() {
       return hasMyProfile() &&
-        (myProfile().isAdmin == true || myProfile().role in ['admin', 'yetkili']);
+        (
+          (myProfile().keys().hasAny(['role']) && myProfile().role in ['admin', 'yetkili'])
+          || (!myProfile().keys().hasAny(['role']) && myProfile().isAdmin == true)
+        );
     }
 
     function changedProtectedUserFields() {

@@ -12,13 +12,14 @@ async function assertAdmin(context) {
 
   const snap = await db.collection('users').doc(context.auth.uid).get();
   const data = snap.exists ? snap.data() : {};
-  const role = data.role || (data.isAdmin ? 'admin' : 'user');
+  const role = typeof data.role === 'string' ? data.role.trim().toLowerCase() : '';
+  const effectiveRole = role || (data.isAdmin ? 'admin' : 'user');
 
-  if (data.isAdmin !== true && role !== 'admin' && role !== 'yetkili') {
+  if (effectiveRole !== 'admin' && effectiveRole !== 'yetkili') {
     throw new functions.https.HttpsError('permission-denied', 'Bu işlem için admin yetkisi gerekir.');
   }
 
-  return { uid: context.auth.uid, role };
+  return { uid: context.auth.uid, role: effectiveRole };
 }
 
 function normalizeRole(role) {
